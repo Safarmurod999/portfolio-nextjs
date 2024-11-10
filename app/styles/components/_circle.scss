@@ -13,6 +13,7 @@
     position: absolute;
     @include size(180px, 180px);
     @include flex;
+    transition: .3s;
     // animation: rotator 7s linear infinite;
   }
   --white: #fff;
