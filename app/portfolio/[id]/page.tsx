@@ -6,6 +6,7 @@ import { projects } from "../../const/data";
 import "../../styles/app.scss";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
+import {  ProjectInnerProps } from "@/app/types/types";
 const ProjectInner = () => {
   const { id } = useParams();
 
@@ -15,14 +16,14 @@ const ProjectInner = () => {
         <div className="container">
           <div className="project-navigation">
             <Link href="/portfolio" aria-label="back">
-              home / portfolio / {id}
+              home / portfolio / <span>{id}</span>
             </Link>
             <Link href="/portfolio" aria-label="back" className="primary-btn">
               Ortga
             </Link>
           </div>
-          {projects.map((el: any) => {
-            if (el.id == id) {
+          {projects.map((el: ProjectInnerProps) => {
+            if (el.id == +id) {
               return (
                 <div
                   key={el.id}
@@ -44,7 +45,9 @@ const ProjectInner = () => {
                       aria-label="page"
                       className="flex items-center gap-[5px] group"
                     >
-                      <span className="group-hover:mr-[5px] duration-200">Sayt Havolasi</span>
+                      <span className="group-hover:mr-[5px] duration-200">
+                        Sayt Havolasi
+                      </span>
                       <FaArrowRightLong className="duration-200" />
                     </Link>
                   </div>

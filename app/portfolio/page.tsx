@@ -2,8 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import { projects } from "../const/data";
 import "../styles/app.scss";
-import ProjectsCard from "../components/ProjectsWrapper/ProjectsCard";
-import { Title } from "../components";
+import { ProjectsWrapper, Title } from "../components";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -25,19 +24,7 @@ const Portfolio = () => {
       </section>
       <section id="portfolio">
         <div className="container">
-          <ul className="projects-list">
-            {projects.map((el: any) => {
-              return (
-                <ProjectsCard
-                  id={el.id}
-                  image={el.image}
-                  title={el.title}
-                  url={el.url}
-                  data={el.data}
-                />
-              );
-            })}
-          </ul>
+            <ProjectsWrapper array={projects} type="full"/>
         </div>
       </section>
     </main>

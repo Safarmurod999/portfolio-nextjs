@@ -1,3 +1,5 @@
+import { StaticImageData } from "next/image";
+
 export interface SpinnerProps {
   className?: string;
   position?: "center" | "start" | "end" | "full" | "absolute";
@@ -51,7 +53,9 @@ export interface ServiceCardProps {
   title: string;
   description: string;
 }
-
+export interface ServiceWrapperProps {
+  array: ServiceCardProps[];
+}
 export interface DetailsCardProps {
   id: number;
   data: string;
@@ -65,4 +69,19 @@ export interface ProjectCardProps {
   title: string;
   url: string;
   data: string;
+}
+export interface ProjectInnerProps {
+  id: number;
+
+  image: StaticImageData;
+
+  title: string;
+
+  data: string;
+
+  url: string;
+}
+export interface ProjectWrapperProps {
+  array: ProjectInnerProps[];
+  type: string;
 }

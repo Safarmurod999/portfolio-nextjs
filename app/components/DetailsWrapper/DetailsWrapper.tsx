@@ -12,6 +12,7 @@ const DetailsWrapper = ({ array, title }: DetailsWrapperProps) => {
           return (
             <DetailsCard
               id={el.id}
+              key={el.id}
               data={el.data}
               title={el.title}
               time={el.time}

@@ -2,10 +2,11 @@
 
 import React from "react";
 import ServiceCard from "./ServiceCard/ServiceCard";
-const ServiceWrapper = ({ array }: { array: any }) => {
+import { ServiceCardProps, ServiceWrapperProps } from "@/app/types/types";
+const ServiceWrapper = ({ array }: ServiceWrapperProps) => {
   return (
     <ul className="service-wrapper">
-      {array.map((service: any, index: number) => (
+      {array.map((service: ServiceCardProps, index: number) => (
         <ServiceCard key={index} {...service} />
       ))}
     </ul>

@@ -46,7 +46,7 @@
 .project-detail {
   img {
     width: 100%;
-    max-width: 600px;
+    max-width: 50%;
     max-height: 315px;
     min-height: 315px;
     border-radius: 15px;
@@ -72,31 +72,34 @@
     letter-spacing: 0%;
     text-align: left;
   }
-  a{
+  a {
     width: 180px;
     margin-top: 10px;
     padding: 10px 20px;
     border-radius: 10px;
-    color: var(--white);
+    color: #fff;
     background-color: var(--primary-color);
   }
 }
-.project-navigation{
+.project-navigation {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  padding:0 0 30px;
-  a{
-    color: var(--primary-color);
+  padding: 0 0 30px;
+  a {
+    color: var(--text-color);
+    span {
+      color: var(--primary-color);
+    }
     font-family: "Syne", sans-serif;
     font-size: 14px;
-    font-weight: 700;
+    font-weight: 400;
     line-height: 22px;
     letter-spacing: 0%;
     text-align: left;
     text-transform: capitalize;
   }
-  .primary-btn{
+  .primary-btn {
     padding: 10px 20px;
     margin-top: 10px;
     border: 1px solid var(--primary-color);

@@ -18,6 +18,9 @@ export default function RootLayout({
   useEffect(() => {
     MouseFollower.registerGSAP(gsap);
     const cursor = new MouseFollower();
+    return () => {
+      cursor.destroy();
+    };
   }, []);
   return (
     <>

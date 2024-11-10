@@ -6,7 +6,7 @@ import { RiDownloadLine } from "react-icons/ri";
 
 const Circle = ({ text, link, id }: CircleProps) => {
   useEffect(() => {
-    let el = document.getElementById(id);
+    const el = document.getElementById(id);
     let texture = el?.querySelector(".circle__inner");
     let deg = 360 / text.length;
     let origin = 0;

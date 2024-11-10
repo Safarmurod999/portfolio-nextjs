@@ -5,7 +5,7 @@ import Link from "next/link";
 import ThemeSwitcher from "./ThemeSwitcher";
 
 const Header = () => {
-  let [open, setOpen] = useState({
+  const [open, setOpen] = useState({
     first: false,
     second: false,
     third: false,

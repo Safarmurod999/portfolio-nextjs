@@ -195,7 +195,7 @@ const Page = () => {
             <TopTitle>My Works Portfolio</TopTitle>
             <Title>My Projects</Title>
           </div>
-          <ProjectsWrapper array={projects} />
+          <ProjectsWrapper array={projects} type="half"/>
         </div>
         <div className="container">
           <PrimaryBtn
