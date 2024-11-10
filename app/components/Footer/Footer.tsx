@@ -15,7 +15,11 @@ import bell from "../../assets/icons/bell.svg";
 import Image from "next/image";
 const Footer = () => {
   const [message, setMessage] = useState({ name: "", email: "", textarea: "" });
-  const onChangeHandler = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
+  const onChangeHandler = (
+    e:
+      | React.ChangeEvent<HTMLTextAreaElement>
+      | React.ChangeEvent<HTMLTextAreaElement>
+  ) => {
     setMessage({ ...message, [e.target.name]: e.target.value });
   };
   return (
