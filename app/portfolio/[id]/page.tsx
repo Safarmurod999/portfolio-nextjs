@@ -7,6 +7,10 @@ import "../../styles/app.scss";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 import {  ProjectInnerProps } from "@/app/types/types";
+import { Metadata } from "next";
+
+
+
 const ProjectInner = () => {
   const { id } = useParams();
 
