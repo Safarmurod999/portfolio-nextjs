@@ -1,0 +1,17 @@
+@mixin size($mh: auto, $mw: auto) {
+    min-height: $mh;
+    min-width: $mw;
+    max-height: $mh;
+    max-width: $mw;
+  }
+  @mixin border($w: 4px, $c: var(--color-3), $r: 0) {
+    border: $w solid $c;
+    border-radius: $r;
+  }
+  @mixin flex($ai: center, $jc: center, $fd: row, $gap: 0) {
+    display: flex;
+    flex-direction: $fd;
+    align-items: $ai;
+    justify-content: $jc;
+    gap: $gap;
+  }

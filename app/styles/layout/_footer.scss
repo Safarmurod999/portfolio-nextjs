@@ -1,0 +1,260 @@
+.footer {
+    padding: 100px 0 0;
+    .container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 30px;
+      @media screen and (max-width: 960px) {
+        flex-direction: column;
+        gap: 50px;
+      }
+    }
+    .title {
+      max-width: 475px;
+      font-size: 50px;
+      @media screen and (max-width: 1170px) {
+        font-size: 40px;
+        line-height: 45px;
+      }
+      @media screen and (max-width: 960px) {
+        max-width: 100%;
+        text-align: center;
+      }
+    }
+    &__data {
+      max-width: 590px;
+      @media screen and (max-width: 960px) {
+        max-width: 100%;
+        width: 100%;
+        text-align: center;
+      }
+    }
+    &__list {
+      margin-bottom: 30px;
+      &--item {
+        padding: 25px 0;
+        display: flex;
+        align-items: center;
+        justify-content: flex-start;
+        gap: 20px;
+        border-bottom: 1px solid #dddddd;
+        @media screen and (max-width: 425px) {
+          overflow: hidden;
+        }
+      }
+      p {
+        color: var(--text-light-color);
+        font-family: "Mulish", sans-serif;
+        font-size: 16px;
+        font-weight: 700;
+        line-height: 26px;
+        letter-spacing: 0%;
+        text-align: left;
+        text-transform: uppercase;
+        margin-bottom: 8px;
+        @media screen and (max-width: 1170px) {
+          font-size: 14px;
+          line-height: 20px;
+        }
+      }
+      h6 {
+        color: var(--text-color);
+        font-family: "Syne", sans-serif;
+        font-size: 22px;
+        font-weight: 700;
+        line-height: 32px;
+        letter-spacing: 0%;
+        text-align: left;
+        @media screen and (max-width: 1170px) {
+          font-size: 18px;
+          line-height: 20px;
+        }
+      }
+      svg {
+        @media screen and (max-width: 1170px) {
+          width: 60px;
+        }
+      }
+    }
+    &__links {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: flex-start;
+      gap: 10px;
+      @media screen and (max-width: 960px) {
+        justify-content: center;
+      }
+      li {
+        background-color: #fff;
+        border: 1px solid var(--text-color);
+        padding: 10px;
+        border-radius: 50%;
+        transition: 0.3s;
+        &:hover {
+          background-color: var(--primary-color);
+          border-color: var(--primary-color);
+          svg {
+            color: #fff;
+          }
+        }
+        a {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+        }
+        svg {
+          font-size: 22px;
+        }
+      }
+    }
+    &__contact {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-grow: 1;
+    }
+    &__form {
+      width: 100%;
+      width: 650px;
+      height: 650px;
+      padding: 80px;
+      border-radius: 50%;
+      border: 1px solid var(--text-color);
+      @media screen and (max-width: 1270px) {
+        width: 600px;
+        height: 600px;
+      }
+      @media screen and (max-width: 1170px) {
+        width: 550px;
+        height: 550px;
+      }
+      @media screen and (max-width: 1080px) {
+        width: 500px;
+        height: 500px;
+      }
+      @media screen and (max-width: 550px) {
+        max-width: 100%;
+        width: 100%;
+        padding: 40px 0;
+        border: none;
+      }
+      &--title {
+        color: var(--text-color);
+        font-family: "Syne", sans-serif;
+        font-size: 40px;
+        font-weight: 700;
+        line-height: 50px;
+        letter-spacing: 0%;
+        text-align: center;
+        margin-bottom: 10px;
+        @media screen and (max-width: 1170px) {
+          font-size: 30px;
+          line-height: 40px;
+        }
+      }
+      &--input,
+      textarea {
+        width: 100%;
+        padding: 17px 0;
+        color: var(--text-light-color);
+        font-family: "Mulish", sans-serif;
+        font-size: 16px;
+        font-weight: 600;
+        line-height: 20px;
+        letter-spacing: 0%;
+        text-align: left;
+        border-bottom: 1px solid var(--text-color);
+        margin-bottom: 20px;
+        @media screen and (max-width: 1170px) {
+          font-size: 14px;
+          line-height: 18px;
+          margin-bottom: 10px;
+        }
+      }
+      textarea {
+        height: 100px;
+        resize: none;
+        @media screen and (max-width: 1170px) {
+          height: 80px;
+          margin-bottom: 20px;
+        }
+      }
+    }
+    &__btn {
+      position: relative;
+      left: 75%;
+      width: 150px;
+      height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-color);
+      text-align: center;
+      font-family: "Mulish", sans-serif;
+      font-size: 14px;
+      font-style: normal;
+      font-weight: 700;
+      line-height: 150px; /* 1071.429% */
+      text-transform: uppercase;
+      border-radius: 50%;
+      z-index: 22;
+      @media screen and (max-width: 1170px) {
+        width: 120px;
+        height: 120px;
+      }
+      @media screen and (max-width: 550px) {
+        margin-top: 20px;
+        border: none;
+        left: 0;
+      }
+      &:hover {
+        &::after {
+          top: 0;
+          left: 0;
+        }
+      }
+      &::before {
+        position: absolute;
+        content: "";
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        z-index: 11;
+        transition: 0.3s;
+        border: 1px solid var(--text-color);
+      }
+      &::after {
+        position: absolute;
+        content: "";
+        top: -5px;
+        left: -5px;
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        background-color: #fad764;
+        z-index: -1;
+        transition: 0.3s;
+      }
+    }
+    &__bottom {
+      margin-top: 100px;
+      padding: 20px;
+      background-color: #000;
+      font-family: "Mulish", sans-serif;
+      font-size: 16px;
+      font-weight: 700;
+      line-height: 26px;
+      letter-spacing: 0%;
+      text-align: center;
+      color: #fff;
+      @media screen and (min-width: 350px) {
+        padding: 20px 10px;
+        font-size: 14px;
+      }
+    }
+  }
+  

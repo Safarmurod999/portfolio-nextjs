@@ -1,0 +1,95 @@
+.service-wrapper {
+  width: 100%;
+  max-width: 100%;
+  .service-card:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.service-card {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-bottom: 1px solid #ddd;
+  padding-bottom: 40px;
+  margin-bottom: 50px;
+  transition: 0.3s;
+  &:hover {
+    border-color: var(--primary-color);
+    .service-card-icon {
+      background-color: var(--secondary-color);
+    }
+  }
+  div {
+    display: flex;
+    @media screen and (max-width: 400px) {
+      flex-direction: column;
+    }
+  }
+  &-content {
+    flex-direction: column;
+    margin-inline: 30px;
+    @media screen and (max-width: 400px) {
+      margin-inline: 0px;
+    }
+  }
+  h4 {
+    color: var(--primary-color);
+    font-family: "Syne", sans-serif;
+    font-size: 34px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 45px; /* 132.353% */
+    @media screen and (max-width: 530px) {
+      font-size: 24px;
+      line-height: 35px;
+    }
+    @media screen and (max-width: 400px) {
+      margin-bottom: 20px;
+    }
+  }
+  span {
+    color: #666;
+    font-family: "Mulish", sans-serif;
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 26px; /* 162.5% */
+    text-transform: uppercase;
+    margin-bottom: 16px;
+  }
+  p {
+    color: var(--text-color);
+    font-family: "Syne", sans-serif;
+    font-size: 32px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 42px; /* 131.25% */
+    @media screen and (max-width: 530px) {
+      font-size: 28px;
+      line-height: 35px;
+    }
+    @media screen and (max-width: 480px) {
+      font-size: 20px;
+      line-height: 30px;
+    }
+    @media screen and (max-width: 400px) {
+      font-size: 16px;
+      line-height: 20px;
+    }
+  }
+  &-icon {
+    padding: 13px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background-color: #fff;
+    transition: 0.3s;
+  }
+  svg {
+    font-size: 21px;
+  }
+}

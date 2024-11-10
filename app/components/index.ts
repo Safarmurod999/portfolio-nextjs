@@ -1,0 +1,12 @@
+export { default as Dropdown } from "./Header/Dropdown/Dropdown";
+export { default as PrimaryBtn } from "./PrimaryBtn/PrimaryBtn";
+export { default as Header } from "./Header/Header";
+export { default as Footer } from "./Footer/Footer";
+export { default as Spinner } from "./Spinner/Spinner";
+export { default as Typography } from "./Typography/Typography";
+export { default as SecondaryBtn } from "./SecondaryBtn/SecondaryBtn";
+export { default as Title } from "./Title/Title";
+export { default as TopTitle } from "./TopTitle/TopTitle";
+export { default as ServiceWrapper } from "./ServiceWrapper/ServiceWrapper";
+export { default as DetailsWrapper } from "./DetailsWrapper/DetailsWrapper";
+export { default as ProjectsWrapper } from "./ProjectsWrapper/ProjectsWrapper";
