@@ -7,8 +7,8 @@ import { RiDownloadLine } from "react-icons/ri";
 const Circle = ({ text, link, id }: CircleProps) => {
   useEffect(() => {
     const el = document.getElementById(id);
-    let texture = el?.querySelector(".circle__inner");
-    let deg = 360 / text.length;
+    const texture = el?.querySelector(".circle__inner");
+    const deg = 360 / text.length;
     let origin = 0;
     text.split("").forEach((ea) => {
       ea = `<p style='height:${80}px;transform:rotate(${Math.round(

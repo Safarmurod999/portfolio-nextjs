@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import ServiceCard from "./ServiceCard/ServiceCard";
+import ServiceCard from "./ServiceCard";
 import { ServiceCardProps, ServiceWrapperProps } from "@/app/types/types";
 const ServiceWrapper = ({ array }: ServiceWrapperProps) => {
   return (

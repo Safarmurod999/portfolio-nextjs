@@ -1,11 +1,11 @@
-import { ProjectCardProps, ProjectInnerProps } from "@/app/types/types";
+import { ProjectInnerProps } from "@/app/types/types";
 import Image from "next/image";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
 
 const ProjectsCard = ({ id, image, title, data }: ProjectInnerProps) => {
   return (
-    <li key={id} className="projects-item">
+    <li className="projects-item">
       <Image
         src={image}
         loading="lazy"

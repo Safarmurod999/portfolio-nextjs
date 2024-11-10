@@ -1,6 +1,6 @@
 import { DetailsCardProps } from "@/app/types/types";
 
-const DetailsCard = ({ id, data, time, title }: DetailsCardProps) => {
+const DetailsCard = ({ data, time, title }: DetailsCardProps) => {
   return (
     <li className="details-item" data-aos="fade-up">
       <div className="details-time">{time}</div>
