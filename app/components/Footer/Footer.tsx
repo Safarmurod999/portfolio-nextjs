@@ -16,9 +16,7 @@ import Image from "next/image";
 const Footer = () => {
   const [message, setMessage] = useState({ name: "", email: "", textarea: "" });
   const onChangeHandler = (
-    e:
-      React.ChangeEvent<HTMLTextAreaElement>
-      | React.ChangeEvent<HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>
   ) => {
     setMessage({ ...message, [e.target.name]: e.target.value });
   };
