@@ -1,6 +1,7 @@
 import type { Config } from "tailwindcss";
 
 const config: Config = {
+  darkMode: "selector",
   content: [
     "./pages/**/*.{js,ts,jsx,tsx,mdx}",
     "./components/**/*.{js,ts,jsx,tsx,mdx}",
@@ -9,11 +10,19 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "var(--background)",
-        foreground: "var(--foreground)",
+        primary: "#8670ef",
+        black: "#18171c",
+        secondary: "#fad764",
+        "secondary-bg": "#f6f6f6",
+        "bg-color": "rgb(243,243,243)",
+        "bg-color-2": "#f8f9fa",
+        lightgray: "d4d4d4",
       },
       animation: {
         "spin-slow": "spin 5s linear infinite",
+      },
+      fontFamily: {
+        syne: ["Syne"],
       },
     },
   },

@@ -33,7 +33,7 @@ const Footer = () => {
               </div>
               <div>
                 <p>Phone</p>
-                <h6>+998 93 508 22 61</h6>
+                <h6>+998 50 705 09 04</h6>
               </div>
             </li>
             <li className="footer__list--item">

@@ -1,3 +1,4 @@
+import { Footer, Header } from "@/app/components";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -11,5 +12,9 @@ export default function Layout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  return <>{children}</>;
+  return <>
+  <Header/>
+  {children}
+  <Footer/>
+  </>;
 }

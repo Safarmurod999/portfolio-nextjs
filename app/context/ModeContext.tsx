@@ -18,7 +18,7 @@ const ModeContextProvider = ({
   }, []);
 
   if (!mounted) {
-    return <>{children}</>; // Prevents SSR mismatch
+    return <>{children}</>;
   }
 
   return (

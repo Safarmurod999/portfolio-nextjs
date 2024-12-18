@@ -1,5 +1,5 @@
 "use client"
-import { Header, Footer } from "./components";
+// import { Header, Footer } from "./components";
 import BackTop from "./components/BackTop/BackTop";
 import ModeContextProvider from "./context/ModeContext";
 
@@ -27,9 +27,9 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning>
         <body className="min-h-screen">
           <ModeContextProvider defaultTheme="light" enableSystem>
-            <Header />
+            {/* <Header /> */}
             {children}
-            <Footer />
+            {/* <Footer /> */}
             <BackTop />
           </ModeContextProvider>
         </body>

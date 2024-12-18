@@ -21,13 +21,13 @@ const ThemeSwitcher = () => {
 
       <button
         aria-label="color-mode"
-        className="color-mode"
+        className="color-mode group"
         onClick={handleTheme}
       >
         {resolvedTheme === "dark" ? (
-          <BsSun className="color-mode__icon hover:-rotate-90 duration-300" />
+          <BsSun className="color-mode__icon group-hover:-rotate-90 duration-300" />
         ) : (
-          <BsMoon className="color-mode__icon hover:-rotate-90 duration-300" />
+          <BsMoon className="color-mode__icon group-hover:-rotate-90 duration-300" />
         )}
       </button>
       

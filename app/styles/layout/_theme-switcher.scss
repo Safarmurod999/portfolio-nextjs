@@ -1,0 +1,16 @@
+.color-mode {
+    padding: 15px;
+    border-radius: 10px;
+    border: 1.5px solid var(--text-color);
+    &:hover {
+      background-color: var(--secondary-color);
+      border-color: var(--secondary-color);
+      svg {
+        color: #fff;
+      }
+    }
+    svg {
+      font-size: 20px;
+      color: var(--text-color) !important;
+    }
+  }
