@@ -1,13 +1,14 @@
+"use client";
+
 import { Breadcrumb } from "@/app/components";
-import React from "react";
+import UserWrapper from "@/app/components/Dashboard/UserWrapper/UserWrapper";
 
-const Page = async () => {
-
+const Page = () => {
   return (
-    <section className="users">
+    <section className="users h-[100svh]">
       <div className="admin-container">
-        <Breadcrumb />
-        <div className="dashboard-title">Users</div>
+        <Breadcrumb title="Users" />
+        <UserWrapper />
       </div>
     </section>
   );

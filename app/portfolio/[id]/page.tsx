@@ -6,7 +6,7 @@ import { projects } from "../../const/data";
 import "../../styles/app.scss";
 import Link from "next/link";
 import { FaArrowRightLong } from "react-icons/fa6";
-import {  ProjectInnerProps } from "@/app/types/types";
+import {  ProjectInnerProps } from "@/app/types/landing/types";
 import { Metadata } from "next";
 
 

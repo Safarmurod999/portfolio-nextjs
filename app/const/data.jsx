@@ -9,6 +9,9 @@ import najottalim from "../assets/images/Projects/najottalim.webp";
 import consultation from "../assets/images/Projects/100yuristov.webp";
 import simply from "../assets/images/Projects/simply.webp";
 import matras from "../assets/images/Projects/matras.webp"
+
+export const BASIC_URL = "http://localhost:3000/api"
+
 export const services = [
   {
     id: 0,

@@ -1,24 +1,23 @@
-import { Metadata } from "next";
+"use client";
 import React from "react";
-import Sidebar from "../components/Sidebar/Sidebar";
+import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
 import { AdminNavbar } from "../components";
+import { useSelector } from "react-redux";
+import { RootState } from "../store/store";
 
-export const metadata: Metadata = {
-  title: "Safarmurod's Portfolio | Dashboard",
-  description:
-    "Safarmurod is a web developer and passionate about creating digital experiences. He has a strong background in web development and has acquired the skills and knowledge necessary to make your project a success.",
-};
 const RootLayout = ({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) => {
+  const { toggleSidebar } = useSelector((state: RootState) => state.state);
+
   return (
     <>
       <div className="flex admin-layout flex-row min-h-full flex-1 w-full">
-        <Sidebar />
-        <main className={`min-h-full`}>
-          <AdminNavbar />
+        <Sidebar toggleSidebar={toggleSidebar} />
+        <main className={`min-h-full ${toggleSidebar ? "admin-content" : ""}`}>
+          <AdminNavbar toggleSidebar={toggleSidebar} />
           {children}
         </main>
       </div>

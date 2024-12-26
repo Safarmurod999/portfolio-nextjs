@@ -1,8 +1,8 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { Metadata } from "next";
-import { projects } from "../const/data";
+import { BASIC_URL, projects } from "../const/data";
 import "../styles/app.scss";
-import { Footer, Header, ProjectsWrapper, Title } from "../components";
+import { Footer, Header, ProjectsWrapper, Spinner, Title } from "../components";
 import Link from "next/link";
 
 export const metadata: Metadata = {
@@ -11,7 +11,10 @@ export const metadata: Metadata = {
     "Projects page of Safarmurod's Portfolio. Ther are some projects that I have done.",
 };
 
-const Portfolio = () => {
+const Portfolio = async () => {
+  const data = await fetchData();
+  console.log(data);
+
   return (
     <>
       <Header />
@@ -26,7 +29,9 @@ const Portfolio = () => {
         </section>
         <section id="portfolio">
           <div className="container">
-            <ProjectsWrapper array={projects} type="full" />
+            <Suspense fallback={<Spinner position="full" />}>
+              <ProjectsWrapper data={data} array={projects} type="full" />
+            </Suspense>
           </div>
         </section>
       </main>
@@ -36,3 +41,14 @@ const Portfolio = () => {
 };
 
 export default Portfolio;
+
+const fetchData = async () => {
+  try {
+    const response = await fetch(`${BASIC_URL}/users`);
+
+    const data = await response.json();
+    return data;
+  } catch (error: any) {
+    console.log(error);
+  }
+};

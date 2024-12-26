@@ -17,7 +17,7 @@ import { FaGithubAlt } from "react-icons/fa6";
 import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa6";
 
-import Circle from "./components/Circle/Circle";
+import Circle from "./components/ui/Circle/Circle";
 import {
   services,
   skills,

@@ -30,3 +30,27 @@ export async function GET(
     );
   }
 }
+export async function DELETE(
+  req: Request,
+  { params }: { params: { id: string } }
+) {
+  try {
+    const { id } = params;
+    console.log(id);
+
+    const connection = await connectToDatabase();
+    const userRepository = connection.getRepository(Users);
+    const user = await userRepository.findOne({ where: {id} });
+    if (!user) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
+    }
+    await userRepository.delete(id);
+    return NextResponse.json({ message: "User deleted" });
+  } catch (error) {
+    console.error("Error deleting user:", error);
+    return NextResponse.json(
+      { error: "Failed to delete user" },
+      { status: 500 }
+    );
+  }
+}

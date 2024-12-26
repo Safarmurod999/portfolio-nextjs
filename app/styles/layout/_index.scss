@@ -1,8 +1,11 @@
+// landing
 @import "./header";
 @import "./footer";
+@import "./theme-switcher";
 @import "./spinner";
 @import "./backtop";
+
+// dashboard
 @import "./admin-navbar";
 @import "./sidebar";
 @import "./admin-layout";
-@import "./theme-switcher";

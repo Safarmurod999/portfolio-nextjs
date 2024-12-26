@@ -27,12 +27,23 @@
       }
     }
     a {
-      color: var(--text-color);
+      color: var(--border-color);
       text-transform: capitalize;
       text-decoration: none;
       &:hover {
         color: var(--primary-color);
       }
     }
+  }
+  &-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    color: var(--text-color);
+    text-transform: capitalize;
+    border: 1px solid var(--border-color);
+    border-radius: 24px;
+    padding: 5px 15px;
   }
 }

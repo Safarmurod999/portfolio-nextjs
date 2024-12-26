@@ -1,8 +1,17 @@
-@import "./typography";
-@import "./dropdown";
-@import "./buttons";
-@import "./circle";
+// landing
 @import "./services";
 @import "./details";
 @import "./projects";
+@import "./circle";
+
+// ui
+@import "./buttons";
+@import "./dropdown";
+@import "./typography";
+
+// dashboard
 @import "./breadcrumb";
+@import "./pagination";
+@import "./users-wrapper";
+@import "./table";
+@import "./form";

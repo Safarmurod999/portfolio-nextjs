@@ -70,22 +70,22 @@ export async function UPDATE(request: NextRequest) {
   }
 }
 
-export async function DELETE(request: NextRequest) {
-  try {
-    const data = await request.json();
-    const connection = await connectToDatabase();
-    const userRepository = connection.getRepository(Users);
-    const user = await userRepository.findOne(data.id);
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-    await userRepository.delete(data.id);
-    return NextResponse.json({ message: "User deleted" });
-  } catch (error) {
-    console.error("Error deleting user:", error);
-    return NextResponse.json(
-      { error: "Failed to delete user" },
-      { status: 500 }
-    );
-  }
-}
+// export async function DELETE(request: NextRequest) {
+//   try {
+//     const data = await request.json();
+//     const connection = await connectToDatabase();
+//     const userRepository = connection.getRepository(Users);
+//     const user = await userRepository.findOne(data.id);
+//     if (!user) {
+//       return NextResponse.json({ error: "User not found" }, { status: 404 });
+//     }
+//     await userRepository.delete(data.id);
+//     return NextResponse.json({ message: "User deleted" });
+//   } catch (error) {
+//     console.error("Error deleting user:", error);
+//     return NextResponse.json(
+//       { error: "Failed to delete user" },
+//       { status: 500 }
+//     );
+//   }
+// }
