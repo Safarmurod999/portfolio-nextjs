@@ -1,6 +1,6 @@
 export const overrides = [
   {
-    files: ["src/yourSpecificFile.ts"],
+    files: ["**/*.ts", "**/*.tsx"],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
     },

@@ -12,13 +12,13 @@ declare global {
 
   interface AddDataPayload {
     apiEndpoint: string;
-    newData: User | Category | Education | Lead;
+    newData: any;
   }
 
   interface UpdateDataPayload {
     apiEndpoint: string;
     id: number;
-    newData: { active: boolean } | User | Category | Education | Lead;
+    newData: any;
     // accessToken: string;
   }
 
