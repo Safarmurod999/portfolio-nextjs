@@ -29,7 +29,7 @@ const Portfolio = async () => {
         <section id="portfolio">
           <div className="container">
             <Suspense fallback={<Spinner position="full" />}>
-              <ProjectsWrapper data={data} array={projects} type="full" />
+              <ProjectsWrapper array={projects} type="full" />
             </Suspense>
           </div>
         </section>
