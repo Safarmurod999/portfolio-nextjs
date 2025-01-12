@@ -1,7 +1,7 @@
 export {};
 declare global {
   interface Education {
-    id?: number;
+    id: number;
     name: string;
     date: string;
     place: string;
@@ -9,20 +9,20 @@ declare global {
   }
 
   interface Lead {
-    id?: number;
+    id: number;
     fullname: string;
     email: string;
     active?: boolean;
   }
 
   interface User {
-    id?: number;
+    id: number;
     username: string;
     password: string;
     active?: boolean;
   }
   interface Category {
-    id?: number;
+    id: number;
     name: string;
     active?: boolean;
   }
