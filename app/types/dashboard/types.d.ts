@@ -5,26 +5,26 @@ declare global {
     name: string;
     date: string;
     place: string;
-    active?: boolean;
+    active: boolean;
   }
 
   interface Lead {
     id: number;
     fullname: string;
     email: string;
-    active?: boolean;
+    active: boolean;
   }
 
   interface User {
     id: number;
     username: string;
     password: string;
-    active?: boolean;
+    active: boolean;
   }
   interface Category {
     id: number;
     name: string;
-    active?: boolean;
+    active: boolean;
   }
   interface FormProps {
     children: React.ReactNode;
