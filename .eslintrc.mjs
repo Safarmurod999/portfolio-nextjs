@@ -8,6 +8,14 @@ const compat = new FlatCompat({
 const eslintConfig = [
   ...compat.config({
     extends: ["next"],
+    overrides: [
+      {
+        files: ["**/*.ts", "**/*.tsx"], // Match all .ts and .tsx files
+        rules: {
+          "@typescript-eslint/no-explicit-any": "off",
+        },
+      },
+    ],
     rules: {
       "@typescript-eslint/no-explicit-any": "off",
     },
