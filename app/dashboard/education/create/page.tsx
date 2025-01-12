@@ -14,7 +14,7 @@ import { useDispatch } from "react-redux";
 const Page = () => {
   const [name, setName] = useState("");
   const [place, setPlace] = useState("");
-  const [date, setDate] = useState("");
+  // const [date, setDate] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();

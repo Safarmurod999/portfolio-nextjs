@@ -73,7 +73,7 @@ export async function PUT(
     const data = await request.json();
     const connection = await connectToDatabase();
     const userRepository = connection.getRepository(Users);
-    let user = await userRepository.findOne({ where: { id } });
+    const user = await userRepository.findOne({ where: { id } });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
     }

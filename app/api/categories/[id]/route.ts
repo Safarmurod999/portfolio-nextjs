@@ -71,7 +71,7 @@ export async function PUT(
     const data = await request.json();
     const connection = await connectToDatabase();
     const categoryRepository = connection.getRepository(Categories);
-    let category = await categoryRepository.findOne({ where: { id } });
+    const category = await categoryRepository.findOne({ where: { id } });
     if (!category) {
       return NextResponse.json(
         { error: "Category not found" },

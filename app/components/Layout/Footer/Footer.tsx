@@ -33,7 +33,7 @@ const Footer = () => {
   };
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    let newData = message;
+    const newData = message;
     dispatch(addData({ apiEndpoint: "leads", newData }));
     setMessage({
       fullname: "",

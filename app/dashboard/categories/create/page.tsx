@@ -16,7 +16,7 @@ const Page = () => {
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    let newData = { name };
+    const newData = { name };
     dispatch(addData({ apiEndpoint: "categories", newData }));
     setName("");
   };

@@ -65,7 +65,7 @@ export async function PUT(
     const data = await request.json();
     const connection = await connectToDatabase();
     const leadsRepository = connection.getRepository(Leads);
-    let leads = await leadsRepository.findOne({ where: { id } });
+    const leads = await leadsRepository.findOne({ where: { id } });
     if (!leads) {
       return NextResponse.json({ error: "Lead not found" }, { status: 404 });
     }
