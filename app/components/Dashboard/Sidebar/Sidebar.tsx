@@ -1,6 +1,9 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { IoCloseSharp, IoPersonOutline } from "react-icons/io5";
+import { TbMessage2Dollar } from "react-icons/tb";
+import { FaUniversity } from "react-icons/fa";
+
 import { usePathname } from "next/navigation";
 import Link from "next/link";
 import { IoIosStats } from "react-icons/io";
@@ -28,12 +31,27 @@ const adminRoutes = [
     path: "/dashboard/categories",
     icon: <BiCategory />,
   },
+  {
+    id: 4,
+    name: "Leads",
+    path: "/dashboard/leads",
+    icon: <TbMessage2Dollar />,
+  },
+  {
+    id: 5,
+    name: "Education",
+    path: "/dashboard/education",
+    icon: <FaUniversity />,
+  },
 ];
 
 const Sidebar = ({ toggleSidebar }: { toggleSidebar: boolean }) => {
   const pathname = usePathname();
   const [activeRoute, setActiveRoute] = useState(pathname || 0);
   const dispatch = useDispatch<AppDispatch>();
+  useEffect(() => {
+    setActiveRoute(pathname);
+  }, [pathname]);
   return (
     <aside className={`sidebar ${toggleSidebar ? "toggle-sidebar" : ""}`}>
       <div className="relative">

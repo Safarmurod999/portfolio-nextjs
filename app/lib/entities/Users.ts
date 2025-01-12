@@ -10,4 +10,7 @@ export class Users {
 
   @Column({ type: "varchar", length: 100 })
   password!: string;
+
+  @Column({ type: "boolean", default: true })
+  active!: boolean;
 }

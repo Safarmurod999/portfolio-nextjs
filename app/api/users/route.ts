@@ -2,12 +2,35 @@
 import { NextRequest, NextResponse } from "next/server";
 import { connectToDatabase } from "@/app/lib/datasource";
 import { Users } from "@/app/lib/entities/Users";
+import { ILike } from "typeorm";
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
+    // Parse query parameters from the request URL
+    const url = new URL(req.url);
+    const queryParams = Object.fromEntries(url.searchParams.entries());
+
     const connection = await connectToDatabase();
     const usersRepository = connection.getRepository(Users);
-    const users = await usersRepository.find();
+
+    const where: Record<string, any> = {};
+    if (Object.keys(queryParams).length > 0) {
+      Object.keys(queryParams).forEach((key) => {
+        if (queryParams[key]) {
+          where[key] = ILike(`%${queryParams[key]}%`);
+        }
+      });
+    }
+
+    const users = await usersRepository.find({
+      where: Object.keys(where).length > 0 ? where : undefined,
+    });
+    console.log(Object.keys(where).length > 0 ? where : undefined);
+
+    if (!users || users.length === 0) {
+      return NextResponse.json({ error: "No users found" }, { status: 404 });
+    }
+
     return NextResponse.json(users);
   } catch (error) {
     console.error("Database error:", error);
@@ -36,6 +59,7 @@ export async function POST(request: NextRequest) {
     const user = userRepository.create({
       username: data.username,
       password: data.password,
+      active: true,
     });
     await userRepository.save(user);
 
@@ -48,44 +72,3 @@ export async function POST(request: NextRequest) {
     );
   }
 }
-
-export async function UPDATE(request: NextRequest) {
-  try {
-    const data = await request.json();
-    const connection = await connectToDatabase();
-    const userRepository = connection.getRepository(Users);
-    const user = await userRepository.findOne(data.id);
-    if (!user) {
-      return NextResponse.json({ error: "User not found" }, { status: 404 });
-    }
-    userRepository.merge(user, data);
-    await userRepository.save(user);
-    return NextResponse.json(user);
-  } catch (error) {
-    console.error("Error updating user:", error);
-    return NextResponse.json(
-      { error: "Failed to update user" },
-      { status: 500 }
-    );
-  }
-}
-
-// export async function DELETE(request: NextRequest) {
-//   try {
-//     const data = await request.json();
-//     const connection = await connectToDatabase();
-//     const userRepository = connection.getRepository(Users);
-//     const user = await userRepository.findOne(data.id);
-//     if (!user) {
-//       return NextResponse.json({ error: "User not found" }, { status: 404 });
-//     }
-//     await userRepository.delete(data.id);
-//     return NextResponse.json({ message: "User deleted" });
-//   } catch (error) {
-//     console.error("Error deleting user:", error);
-//     return NextResponse.json(
-//       { error: "Failed to delete user" },
-//       { status: 500 }
-//     );
-//   }
-// }

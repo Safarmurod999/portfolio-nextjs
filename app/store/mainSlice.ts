@@ -40,13 +40,13 @@ export const updateData = createAsyncThunk(
   "data/updateData",
   async ({ apiEndpoint, id, newData }: UpdateDataPayload, thunkAPI) => {
     try {
+      console.log(newData);
+
       const response = await axios.put(
         `${BASIC_URL}/${apiEndpoint}/${id}`,
         newData
-        // {
-        //   headers: { Authorization: `Bearer ${accessToken}` },
-        // }
       );
+
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
@@ -103,13 +103,14 @@ const dataSlice = createSlice({
         state.error = null;
       })
       .addCase(updateData.fulfilled, (state, action: PayloadAction<any>) => {
-        if (state.data && state.data.data) {
-          const index = state.data.data.findIndex(
-            (item: any) => item.id === action.payload.data[0].id
+        if (state.data) {
+          const index = state.data.findIndex(
+            (item: any) => item.id === action.payload.id
           );
           if (index !== -1) {
-            state.data.data[index] = action.payload.data[0];
+            state.data[index] = action.payload;
           }
+          console.log(state.data[index]);
         }
       })
       .addCase(updateData.rejected, (state, action: PayloadAction<any>) => {
@@ -118,10 +119,11 @@ const dataSlice = createSlice({
       .addCase(deleteData.pending, (state) => {
         state.error = null;
       })
-      .addCase(deleteData.fulfilled, (state, action: PayloadAction<number>) => {        
+      .addCase(deleteData.fulfilled, (state, action: PayloadAction<number>) => {
         if (state.data && state.data) {
           state.data = state.data.filter(
-            (item: any) => item.id !== action.payload
+            (item: any) =>
+              item.id !== action.payload
           );
         }
       })

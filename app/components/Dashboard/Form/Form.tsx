@@ -54,7 +54,7 @@ const FormSelect = ({
         required={required}
       >
         <option value="">{placeholder}</option>
-        {options.map((option: any) => (
+        {options.map((option: OptionProps) => (
           <option key={option.value} value={option.value}>
             {option.label}
           </option>
@@ -64,12 +64,21 @@ const FormSelect = ({
   );
 };
 
+const FormSwitch = ({ value, onChange }: SwitchProps) => {
+  return (
+    <label className="form-switch">
+      <input type="checkbox" checked={value} onChange={onChange} />
+      <div className={`toggle ${value ? "checked" : ""}`}></div>
+    </label>
+  );
+};
+
 const FormBtn = ({ text, icon }: BtnProps) => {
   return (
     <button className="form-button" type="submit">
-      <span>{text}</span>
       {icon && icon}
+      <span>{text}</span>
     </button>
   );
 };
-export { Form, FormControl, FormSelect, FormBtn };
+export { Form, FormControl, FormSelect, FormBtn, FormSwitch };

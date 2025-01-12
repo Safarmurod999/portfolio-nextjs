@@ -22,4 +22,7 @@ export class Projects {
 
   @Column({ type: "varchar", nullable: false })
   technologies!: [number];
+
+  @Column({ type: "boolean", default: true })
+  active!: boolean;
 }

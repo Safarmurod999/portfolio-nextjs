@@ -17,7 +17,7 @@ const Page = () => {
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    let newData = { username, password };
+    const newData = { username, password };
     dispatch(addData({ apiEndpoint: "users", newData }));
     setUsername("");
     setPassword("");

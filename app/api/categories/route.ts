@@ -35,6 +35,7 @@ export async function POST(request: NextRequest) {
 
     const category = categoryRepository.create({
       name: data.name,
+      active: true,
     });
     await categoryRepository.save(category);
 

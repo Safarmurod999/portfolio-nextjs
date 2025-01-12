@@ -7,4 +7,7 @@ export class Categories {
 
   @Column({ type: "varchar", length: 100 })
   name!: string;
+
+  @Column({ type: "boolean", default: true })
+  active!: boolean;
 }

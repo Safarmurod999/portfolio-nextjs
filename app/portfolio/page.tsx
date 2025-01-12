@@ -13,7 +13,6 @@ export const metadata: Metadata = {
 
 const Portfolio = async () => {
   const data = await fetchData();
-  console.log(data);
 
   return (
     <>
@@ -48,7 +47,7 @@ const fetchData = async () => {
 
     const data = await response.json();
     return data;
-  } catch (error: any) {
+  } catch (error: unknown) {
     console.log(error);
   }
 };

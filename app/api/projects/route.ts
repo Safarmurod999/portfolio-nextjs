@@ -28,7 +28,7 @@ export async function POST(request: NextRequest) {
       !data.link ||
       !data.image ||
       !data.category_id ||
-      !data.technologies
+      !data.technologies 
     ) {
       return NextResponse.json(
         { error: "Fields are required" },
@@ -47,6 +47,7 @@ export async function POST(request: NextRequest) {
       image: data.image,
       category_id: data.category_id,
       technologies: data.technologies,
+      active: true,
     });
     await projectRepository.save(project);
 

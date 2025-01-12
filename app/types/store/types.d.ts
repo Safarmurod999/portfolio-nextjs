@@ -1,7 +1,7 @@
 export {};
 declare global {
   interface DataState {
-    data: any | null;
+    data: any;
     isLoading: boolean;
     error: string | null;
   }
@@ -12,13 +12,13 @@ declare global {
 
   interface AddDataPayload {
     apiEndpoint: string;
-    newData: any;
+    newData: User | Category | Education | Lead;
   }
 
   interface UpdateDataPayload {
     apiEndpoint: string;
     id: number;
-    newData: any;
+    newData: { active: boolean } | User | Category | Education | Lead;
     // accessToken: string;
   }
 

@@ -4,6 +4,7 @@ import Sidebar from "../components/Dashboard/Sidebar/Sidebar";
 import { AdminNavbar } from "../components";
 import { useSelector } from "react-redux";
 import { RootState } from "../store/store";
+import { Toaster } from "sonner";
 
 const RootLayout = ({
   children,
@@ -20,6 +21,8 @@ const RootLayout = ({
           <AdminNavbar toggleSidebar={toggleSidebar} />
           {children}
         </main>
+        <Toaster />
+
       </div>
     </>
   );

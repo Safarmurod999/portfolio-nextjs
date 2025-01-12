@@ -39,6 +39,8 @@ import "reflect-metadata";
 import { readFileSync } from "fs";
 import { Users } from "./entities/Users";
 import { Categories } from "./entities/Categories";
+import { Leads } from "./entities/Leads";
+import { Education } from "./entities/Education";
 
 let connection: any = null;
 export const connectToDatabase = async () => {
@@ -46,7 +48,7 @@ export const connectToDatabase = async () => {
     return connection;
   }
   try {
-     connection = await createConnection({
+    connection = await createConnection({
       type: "postgres",
       host: process.env.DB_HOST,
       port: 11732,
@@ -54,10 +56,10 @@ export const connectToDatabase = async () => {
       password: process.env.DB_PASSWORD,
       database: process.env.DB_NAME,
       synchronize: true,
-      entities: [Projects,Users,Categories],
+      entities: [Projects, Users, Categories, Leads,Education],
       migrations: [],
       subscribers: [],
-      
+
       extra: {
         ssl: {
           rejectUnauthorized: false,
@@ -66,7 +68,7 @@ export const connectToDatabase = async () => {
       },
     });
     console.log(process.env.DB_HOST);
-    
+
     console.log("Connected to the database");
     return connection;
   } catch (error) {

@@ -65,7 +65,7 @@ export const useFetchData = (apiEndpoint: string) => {
   const { data, isLoading, error } = useSelector(
     (state: RootState) => state.data
   );
-
+  
   useEffect(() => {
     if (apiEndpoint) {
       dispatch(fetchData({ apiEndpoint }));

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import {
   DetailsWrapper,
   Footer,
@@ -25,11 +25,14 @@ import {
   experience,
   projects,
 } from "./const/data";
+
 import Image from "next/image";
 import Link from "next/link";
 import home from "./assets/images/Home/me-3.webp";
+
 import { Metadata } from "next";
 
+import { Toaster } from "sonner";
 export const metadata: Metadata = {
   title: "Safarmurod's Portfolio | Home",
   description:
@@ -212,6 +215,7 @@ const Page = async () => {
           </div>
         </section>
       </main>
+      <Toaster />
       <Footer />
     </>
   );
