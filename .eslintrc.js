@@ -1,4 +1,4 @@
-export const overrides = [
+module.exports = [
   {
     files: ["**/*.ts", "**/*.tsx"],
     rules: {
