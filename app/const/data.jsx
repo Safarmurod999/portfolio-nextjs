@@ -10,7 +10,7 @@ import consultation from "../assets/images/Projects/100yuristov.webp";
 import simply from "../assets/images/Projects/simply.webp";
 import matras from "../assets/images/Projects/matras.webp"
 
-export const BASIC_URL = "http://localhost:3000/api"
+export const BASIC_URL = process.env.NODE_ENV !== "production" ? "http://localhost:3000/api" : "https://portfolio-nextjs-omega-ecru.vercel.app"
 
 export const services = [
   {
