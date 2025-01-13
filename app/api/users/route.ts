@@ -22,9 +22,9 @@ export async function GET(req: Request) {
       });
     }
 
-    const users = await usersRepository.find({
-      where: Object.keys(where).length > 0 ? where : undefined,
-    });
+    const users = await usersRepository.find();
+    console.log(users);
+    
     console.log(Object.keys(where).length > 0 ? where : undefined);
 
     if (!users || users.length === 0) {
