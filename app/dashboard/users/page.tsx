@@ -1,18 +1,20 @@
 import { Breadcrumb } from "@/app/components";
 import UserWrapper from "@/app/components/Dashboard/UserWrapper/UserWrapper";
 import { Metadata } from "next";
+import { Suspense } from "react";
 
 export const metadata: Metadata = {
   title: "Dashboard | Users",
-  description:
-    "Users page of Dashboard",
+  description: "Users page of Dashboard",
 };
 const Page = () => {
   return (
     <section className="users h-[100svh]">
       <div className="admin-container">
         <Breadcrumb title="Users" />
-        <UserWrapper />
+        <Suspense>
+          <UserWrapper />
+        </Suspense>
       </div>
     </section>
   );

@@ -1,6 +1,6 @@
 "use client";
 import { useFetchData } from "@/app/hooks/useFetch";
-import React, { useCallback, useEffect, useState } from "react";
+import React, { Suspense, useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { deleteData, updateData } from "@/app/store/mainSlice";
 import { AppDispatch } from "@/app/store/store";
@@ -91,12 +91,12 @@ const UserWrapper = () => {
     <div className="data-table-container">
       <div className="flex justify-between items-stretch">
         <Form width="[300px]" onSubmit={handleSubmit}>
-          <FormControl
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={handleSearch}
-          />
+            <FormControl
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={handleSearch}
+            />
           <FormBtn text="Search" />
         </Form>
         <div className="flex">
@@ -129,7 +129,7 @@ const UserWrapper = () => {
                 </td>
               </tr>
             ) : users ? (
-              users.map((user:User) => (
+              users.map((user: User) => (
                 <tr key={user.id}>
                   <td>{user.id}</td>
                   <td>{user.username}</td>

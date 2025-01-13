@@ -2,13 +2,16 @@
 
 import { Breadcrumb } from "@/app/components";
 import EducationWrapper from "@/app/components/Dashboard/EducationWrapper/EducationWrapper";
+import { Suspense } from "react";
 
 const Page = () => {
   return (
     <section className="education h-[100svh]">
       <div className="admin-container">
         <Breadcrumb title="Education" />
-        <EducationWrapper />
+        <Suspense>
+          <EducationWrapper />
+        </Suspense>{" "}
       </div>
     </section>
   );
