@@ -19,8 +19,6 @@ export const AppDataSource = new DataSource({
   synchronize: process.env.NODE_ENV !== "production",
   logging: true,
   entities: [Projects,Users,Categories,Leads,Education],
-  migrations: [],
-  subscribers: [],
   extra: {
     ssl: {
       rejectUnauthorized: false,
