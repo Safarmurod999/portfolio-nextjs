@@ -1,22 +1,24 @@
 import { NextResponse } from "next/server";
 import { Leads } from "@/app/lib/entities/Leads";
-import { connectToDatabase } from "@/app/lib/datasource";
+import { AppDataSource } from "@/app/lib/datasource";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const { id } = params;
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    const connection = await connectToDatabase();
-    const leadsRepository = connection.getRepository(Leads);
+    const leadsRepository = AppDataSource.getRepository(Leads);
 
     const leads = await leadsRepository.findOne({
-      where: { id: String(id) },
+      where: { id },
     });
 
     if (!leads) {
@@ -34,13 +36,16 @@ export async function GET(
 }
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
+        if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    
     const { id } = params;
 
-    const connection = await connectToDatabase();
-    const leadsRepository = connection.getRepository(Leads);
+    const leadsRepository = AppDataSource.getRepository(Leads);
     const leads = await leadsRepository.findOne({ where: { id } });
     if (!leads) {
       return NextResponse.json({ error: "leads not found" }, { status: 404 });
@@ -58,13 +63,17 @@ export async function DELETE(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
+        if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    
     const { id } = params;
     const data = await request.json();
-    const connection = await connectToDatabase();
-    const leadsRepository = connection.getRepository(Leads);
+
+    const leadsRepository = AppDataSource.getRepository(Leads);
     const leads = await leadsRepository.findOne({ where: { id } });
     if (!leads) {
       return NextResponse.json({ error: "Lead not found" }, { status: 404 });

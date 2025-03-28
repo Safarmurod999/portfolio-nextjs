@@ -1,12 +1,14 @@
+import { AppDataSource } from "@/app/lib/datasource";
 // app/api/leads/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { Leads } from "../../lib/entities/Leads";
-import { connectToDatabase } from "@/app/lib/datasource";
 
 export async function GET() {
   try {
-    const connection = await connectToDatabase();
-    const leadsRepository = connection.getRepository(Leads);
+        if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    const leadsRepository = AppDataSource.getRepository(Leads);
     const leads = await leadsRepository.find();
     return NextResponse.json(leads);
   } catch (error) {
@@ -20,22 +22,19 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+        if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const data = await request.json();
 
-    if (
-      !data.fullname ||
-      !data.email ||
-      !data.message
-    ) {
+    if (!data.fullname || !data.email || !data.message) {
       return NextResponse.json(
         { error: "Fields are required" },
         { status: 400 }
       );
     }
 
-    const connection = await connectToDatabase();
-
-    const leadsRepository = connection.getRepository(Leads);
+    const leadsRepository = AppDataSource.getRepository(Leads);
 
     const leads = leadsRepository.create({
       fullname: data.fullname,

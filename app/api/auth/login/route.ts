@@ -1,7 +1,7 @@
-import { connectToDatabase } from "@/app/lib/datasource";
 import { Users } from "@/app/lib/entities/Users";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { AppDataSource } from "@/app/lib/datasource";
 
 const SECRET_KEY = process.env.JWT_SECRET || "safarmurod";
 
@@ -15,9 +15,10 @@ export async function POST(req: Request) {
         { status: 400 }
       );
     }
-
-    const connection = await connectToDatabase();
-    const usersRepository = connection.getRepository(Users);
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    const usersRepository = AppDataSource.getRepository(Users);
 
     const user = await usersRepository.findOne({ where: { username } });
 

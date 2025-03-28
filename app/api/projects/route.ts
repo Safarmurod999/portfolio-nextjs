@@ -1,12 +1,14 @@
 // app/api/users/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { Projects } from "../../lib/entities/Projects";
-import { connectToDatabase } from "@/app/lib/datasource";
+import { AppDataSource } from "@/app/lib/datasource";
 
 export async function GET() {
   try {
-    const connection = await connectToDatabase();
-    const projectsRepository = connection.getRepository(Projects);
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    const projectsRepository = AppDataSource.getRepository(Projects);
     const projects = await projectsRepository.find();
     return NextResponse.json(projects);
   } catch (error) {
@@ -20,6 +22,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const data = await request.json();
 
     if (
@@ -28,7 +33,7 @@ export async function POST(request: NextRequest) {
       !data.link ||
       !data.image ||
       !data.category_id ||
-      !data.technologies 
+      !data.technologies
     ) {
       return NextResponse.json(
         { error: "Fields are required" },
@@ -36,9 +41,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const connection = await connectToDatabase();
-
-    const projectRepository = connection.getRepository(Projects);
+    const projectRepository = AppDataSource.getRepository(Projects);
 
     const project = projectRepository.create({
       title: data.title,
@@ -63,9 +66,12 @@ export async function POST(request: NextRequest) {
 
 export async function PUT(request: NextRequest) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const data = await request.json();
-    const connection = await connectToDatabase();
-    const projectRepository = connection.getRepository(Projects);
+
+    const projectRepository = AppDataSource.getRepository(Projects);
     const project = await projectRepository.findOne(data.id);
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });
@@ -84,9 +90,12 @@ export async function PUT(request: NextRequest) {
 
 export async function DELETE(request: NextRequest) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const data = await request.json();
-    const connection = await connectToDatabase();
-    const projectRepository = connection.getRepository(Projects);
+
+    const projectRepository = AppDataSource.getRepository(Projects);
     const project = await projectRepository.findOne(data.id);
     if (!project) {
       return NextResponse.json({ error: "Project not found" }, { status: 404 });

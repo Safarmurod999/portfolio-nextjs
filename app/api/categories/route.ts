@@ -1,13 +1,15 @@
 // app/api/users/route.ts
 import { NextRequest, NextResponse } from "next/server";
-import { connectToDatabase } from "@/app/lib/datasource";
+import { AppDataSource } from "@/app/lib/datasource";
 import { Categories } from "@/app/lib/entities/Categories";
 
 export async function GET() {
   try {
-    const connection = await connectToDatabase();
-    const usersRepository = connection.getRepository(Categories);
-    const users = await usersRepository.find();
+        if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    const categoryRepository = AppDataSource.getRepository(Categories);
+    const users = await categoryRepository.find();
     return NextResponse.json(users);
   } catch (error) {
     console.error("Database error:", error);
@@ -20,6 +22,9 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
+        if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const data = await request.json();
 
     if (!data.name) {
@@ -29,9 +34,7 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    const connection = await connectToDatabase();
-
-    const categoryRepository = connection.getRepository(Categories);
+    const categoryRepository = AppDataSource.getRepository(Categories);
 
     const category = categoryRepository.create({
       name: data.name,

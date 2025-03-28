@@ -1,22 +1,24 @@
 import { NextResponse } from "next/server";
 import { Categories } from "@/app/lib/entities/Categories";
-import { connectToDatabase } from "@/app/lib/datasource";
+import { AppDataSource } from "@/app/lib/datasource";
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const { id } = params;
     if (!id) {
       return NextResponse.json({ error: "ID is required" }, { status: 400 });
     }
 
-    const connection = await connectToDatabase();
-    const categoryRepository = connection.getRepository(Categories);
+    const categoryRepository = AppDataSource.getRepository(Categories);
 
     const category = await categoryRepository.findOne({
-      where: { id: String(id) },
+      where: { id },
     });
 
     if (!category) {
@@ -37,13 +39,16 @@ export async function GET(
 }
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+
     const { id } = params;
 
-    const connection = await connectToDatabase();
-    const categoryRepository = connection.getRepository(Categories);
+    const categoryRepository = AppDataSource.getRepository(Categories);
     const category = await categoryRepository.findOne({ where: { id } });
     if (!category) {
       return NextResponse.json(
@@ -64,13 +69,16 @@ export async function DELETE(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
     const { id } = params;
     const data = await request.json();
-    const connection = await connectToDatabase();
-    const categoryRepository = connection.getRepository(Categories);
+
+    const categoryRepository = AppDataSource.getRepository(Categories);
     const category = await categoryRepository.findOne({ where: { id } });
     if (!category) {
       return NextResponse.json(

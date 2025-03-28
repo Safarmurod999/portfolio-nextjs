@@ -1,28 +1,29 @@
 import { NextResponse } from "next/server";
 import { Users } from "@/app/lib/entities/Users";
-import { connectToDatabase } from "@/app/lib/datasource";
+import { AppDataSource } from "@/app/lib/datasource";
 
 export async function GET(
   req: Request,
   { params }: { params: { id?: string } }
 ) {
   try {
-    const url = new URL(req.url);
-    const queryParams = Object.fromEntries(url.searchParams.entries());
+    // const url = new URL(req.url);
+    // const queryParams = Object.fromEntries(url.searchParams.entries());
 
-    const connection = await connectToDatabase();
-    const usersRepository = connection.getRepository(Users);
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }    const usersRepository = AppDataSource.getRepository(Users);
 
     const where: Record<string, any> = {};
 
     if (params.id) {
       where.id = params.id;
     } else {
-      Object.keys(queryParams).forEach((key) => {
-        if (queryParams[key]) {
-          where[key] = queryParams[key];
-        }
-      });
+      // Object.keys(queryParams).forEach((key) => {
+      //   if (queryParams[key]) {
+      //     where[key] = queryParams[key];
+      //   }
+      // });
     }
     const users = await usersRepository.find({ where });
 
@@ -42,13 +43,14 @@ export async function GET(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
     const { id } = params;
-
-    const connection = await connectToDatabase();
-    const userRepository = connection.getRepository(Users);
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    const userRepository = AppDataSource.getRepository(Users);
     const user = await userRepository.findOne({ where: { id } });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
@@ -66,13 +68,15 @@ export async function DELETE(
 
 export async function PUT(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: { id: number } }
 ) {
   try {
     const { id } = params;
     const data = await request.json();
-    const connection = await connectToDatabase();
-    const userRepository = connection.getRepository(Users);
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }
+    const userRepository = AppDataSource.getRepository(Users);
     const user = await userRepository.findOne({ where: { id } });
     if (!user) {
       return NextResponse.json({ error: "User not found" }, { status: 404 });
