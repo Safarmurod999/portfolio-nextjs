@@ -49,7 +49,7 @@ export const AppDataSource = new DataSource({
 //         process.env.DB_HOST || "pg-2e1b8ea3-portfolio-nextjs.i.aivencloud.com",
 //       port: 11732,
 //       username: process.env.DB_USER || "avnadmin",
-//       password: process.env.DB_PASSWORD || "AVNS_5IEuvqURosQNm2e-Ju5",
+//       password: process.env.DB_PASSWORD,
 //       database: process.env.DB_NAME || "portfolio",
 //       synchronize: true,
 //       entities: [Projects, Users, Categories, Leads, Education],
