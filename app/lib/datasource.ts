@@ -18,11 +18,20 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: process.env.NODE_ENV !== "production",
   logging: true,
-  entities: [Projects,Users,Categories,Leads,Education],
+  entities: [Projects, Users, Categories, Leads, Education],
   extra: {
-    ssl: {
-      rejectUnauthorized: false,
-      ca: readFileSync(path.join(process.cwd(), "ca.pem")).toString(),
-    },
+    // ssl: {
+    //   rejectUnauthorized: false,
+    //   ca: readFileSync(path.join(process.cwd(), "ca.pem")).toString(),
+    // },
+    ssl:
+      process.env.NODE_ENV === "production"
+        ? {
+            rejectUnauthorized: false,
+            ca:
+              process.env.DB_CA_CERT ||
+              readFileSync(path.join(process.cwd(), "ca.pem")).toString(),
+          }
+        : false,
   },
 });
