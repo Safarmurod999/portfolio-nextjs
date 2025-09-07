@@ -10,7 +10,7 @@ import { IoIosStats } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store/store";
-import { handleSidebar } from "@/app/store/stateSlice";
+import { handleSidebar } from "@/app/store/slices/stateSlice";
 
 const adminRoutes = [
   {

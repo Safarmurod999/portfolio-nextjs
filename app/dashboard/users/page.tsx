@@ -1,5 +1,5 @@
 import { Breadcrumb } from "@/app/components";
-import UserWrapper from "@/app/components/Dashboard/UserWrapper/UserWrapper";
+import UserWrapper from "@/app/components/Wrappers/UserWrapper/UserWrapper";
 import { Metadata } from "next";
 import { Suspense } from "react";
 

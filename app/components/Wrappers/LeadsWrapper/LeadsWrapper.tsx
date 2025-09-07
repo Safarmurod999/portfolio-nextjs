@@ -2,10 +2,10 @@
 import { useFetchData } from "@/app/hooks/useFetch";
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteData, updateData } from "@/app/store/mainSlice";
+import { deleteData, updateData } from "@/app/store/slices/userSlice";
 import { AppDispatch } from "@/app/store/store";
-import Pagination from "../Pagination/Pagination";
-import { Form, FormBtn, FormControl, FormSwitch } from "../Form/Form";
+import Pagination from "../../Dashboard/Pagination/Pagination";
+import { Form, FormBtn, FormControl, FormSwitch } from "../../Dashboard/Form/Form";
 import { MdDeleteOutline } from "react-icons/md";
 import { usePathname, useSearchParams } from "next/navigation";
 import { useRouter } from "next/navigation";

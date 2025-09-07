@@ -5,7 +5,7 @@ import {
   FormBtn,
   FormControl,
 } from "@/app/components/Dashboard/Form/Form";
-import { addData } from "@/app/store/mainSlice";
+import { addData } from "@/app/store/slices/userSlice";
 import { AppDispatch } from "@/app/store/store";
 import { useState } from "react";
 import { IoAddSharp } from "react-icons/io5";

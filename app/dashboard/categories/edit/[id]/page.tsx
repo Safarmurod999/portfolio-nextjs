@@ -5,7 +5,7 @@ import {
   FormBtn,
   FormControl,
 } from "@/app/components/Dashboard/Form/Form";
-import { updateData } from "@/app/store/mainSlice";
+import { updateData } from "@/app/store/slices/userSlice";
 import { AppDispatch } from "@/app/store/store";
 import { useParams } from "next/navigation";
 import { useState } from "react";

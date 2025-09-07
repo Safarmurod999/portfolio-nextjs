@@ -1,29 +1,37 @@
 export {};
 declare global {
   interface DataState {
+    userData: any;
     data: any;
     isLoading: boolean;
     error: string | null;
+    filter: {
+      username: string;
+    };
   }
 
-  interface FetchDataPayload {
+  interface FetchUserDataPayload {
     apiEndpoint: string;
   }
 
-  interface AddDataPayload {
-    apiEndpoint: string;
-    newData: any;
-  }
-
-  interface UpdateDataPayload {
+  interface FetchDetailedDataPayload {
     apiEndpoint: string;
     id: number;
-    newData: any;
+  }
+
+  interface AddUserDataPayload {
+    username: string;
+    password: string;
+    active?: boolean;
+  }
+
+  interface UpdateUserDataPayload {
+    id: number;
+    newData: {
+      username?: string;
+      password?: string;
+      active?: boolean;
+    };
     // accessToken: string;
-  }
-
-  interface DeleteDataPayload {
-    apiEndpoint: string;
-    id: number;
   }
 }

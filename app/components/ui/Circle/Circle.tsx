@@ -24,7 +24,7 @@ const Circle = ({ text, link, id }: CircleProps) => {
       aria-label="download"
       className="circle"
       href={link}
-      download="SafarmurodUrinov"
+      download="safarmurod-cv.pdf"
       target="_blank"
       rel="noopener noreferrer"
     >

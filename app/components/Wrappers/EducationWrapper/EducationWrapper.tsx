@@ -1,28 +1,60 @@
+"use client";
 import { useFetchData } from "@/app/hooks/useFetch";
-import React, { useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { deleteData, updateData } from "@/app/store/mainSlice";
+import { deleteData, updateData } from "@/app/store/slices/userSlice";
 import { AppDispatch } from "@/app/store/store";
-import Pagination from "../Pagination/Pagination";
-import { Form, FormBtn, FormControl, FormSwitch } from "../Form/Form";
+import Pagination from "@/app/components/Dashboard/Pagination/Pagination";
+import { Form, FormBtn, FormControl, FormSwitch } from "@/app/components/Dashboard/Form/Form";
+import { MdDeleteOutline } from "react-icons/md";
+import { usePathname, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
 import Link from "next/link";
 import { IoAddSharp } from "react-icons/io5";
-import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
-import { toast } from "sonner";
 
-const CategoriesWrapper = () => {
-  const [name, setName] = useState("");
-
-  const { data: categories, isLoading, error } = useFetchData(`categories`);
+const EducationWrapper = () => {
+  const router = useRouter();
+  const pathname = usePathname();
+  const searchParams = useSearchParams();
+  const [name, setName] = useState(searchParams.get("name") || "");
   const dispatch = useDispatch<AppDispatch>();
-
+  const { data: education, isLoading, error } = useFetchData(`education`);
+  // ${
+  //   searchParams.get("name") ? `?name=${searchParams.get("name")}` : ""
+  // }
   const handleDelete = (id: number) => {
-    dispatch(deleteData({ apiEndpoint: "categories", id }));
-    toast.success("Category deleted successfully", {
+    dispatch(deleteData({ apiEndpoint: "education", id }));
+    toast.success("Education deleted successfully", {
       position: "top-right",
       duration: 2000,
     });
+  };
+
+  const handleSearch = (e: any) => {
+    setName(e.target.value);
+  };
+
+  const createQueryString = useCallback(
+    (name: string, value: string) => {
+      const newParams = new URLSearchParams(searchParams);
+      newParams.set(name, value);
+      return newParams.toString();
+    },
+    [searchParams]
+  );
+  useEffect(() => {
+    if (!name.trim()) {
+      router.push(pathname);
+    }
+  }, [name, router, pathname]);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (name.trim()) {
+      router.push(pathname + "?" + createQueryString("name", name));
+    }
   };
   const handleUpdate = (
     e: React.ChangeEvent<HTMLInputElement>,
@@ -30,14 +62,15 @@ const CategoriesWrapper = () => {
     active: boolean
   ) => {
     e.preventDefault();
+
     dispatch(
       updateData({
-        apiEndpoint: "categories",
+        apiEndpoint: "education",
         newData: { active },
         id: id,
       })
     );
-    toast.success("Category updated successfully", {
+    toast.success("Lead updated successfully", {
       position: "top-right",
       duration: 2000,
     });
@@ -49,19 +82,18 @@ const CategoriesWrapper = () => {
   return (
     <div className="data-table-container">
       <div className="flex justify-between items-stretch">
-        <Form width="[300px]">
+        <Form width="[300px]" onSubmit={handleSubmit}>
           <FormControl
             type="text"
-            placeholder="Category Name"
+            placeholder="Name"
             value={name}
-            onChange={(e) => setName(e.target.value)}
-            required={true}
+            onChange={handleSearch}
           />
           <FormBtn text="Search" />
         </Form>
         <div className="flex">
           <Link
-            href={"/dashboard/categories/create"}
+            href={"/dashboard/education/create"}
             className="form-button flex items-center text-white"
           >
             <IoAddSharp />
@@ -76,6 +108,8 @@ const CategoriesWrapper = () => {
             <tr>
               <th>№</th>
               <th>Name</th>
+              <th>Place</th>
+              <th>Date</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -83,34 +117,35 @@ const CategoriesWrapper = () => {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={4}>
+                <td colSpan={6}>
                   <p className="text-center"> Loading...</p>
                 </td>
               </tr>
-            ) : categories ? (
-              categories.map((category: Category) => (
-                <tr key={category.id}>
-                  <td>{category.id}</td>
-                  <td>{category.name}</td>
+            ) : education ? (
+              education.map((education: Education) => (
+                <tr key={education.id}>
+                  <td>{education.id}</td>
+                  <td>{education.name}</td>
+                  <td>{education.place}</td>
+                  <td>{education.date}</td>
                   <td>
-                    {" "}
                     <FormSwitch
                       onChange={(e) =>
-                        handleUpdate(e, category.id, !category.active)
+                        handleUpdate(e, education.id, !education.active)
                       }
-                      value={category.active}
+                      value={education.active}
                     />
                   </td>
                   <td>
                     <div className="flex justify-start items-center gap-2">
                       <Link
-                        href={`/dashboard/categories/edit/${category.id}`}
+                        href={`/dashboard/education/edit/${education.id}`}
                         className="action-btn"
                       >
                         <CiEdit />
                       </Link>
                       <button
-                        onClick={() => handleDelete(category.id)}
+                        onClick={() => handleDelete(education.id)}
                         className="action-btn"
                       >
                         <MdDeleteOutline />
@@ -121,7 +156,7 @@ const CategoriesWrapper = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={4}>
+                <td colSpan={6}>
                   <p className="text-center">No data found</p>
                 </td>
               </tr>
@@ -134,4 +169,4 @@ const CategoriesWrapper = () => {
   );
 };
 
-export default CategoriesWrapper;
+export default EducationWrapper;

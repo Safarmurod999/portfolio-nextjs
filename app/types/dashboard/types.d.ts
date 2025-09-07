@@ -41,6 +41,7 @@ declare global {
     type: string;
     width?: string;
     disabled?: boolean;
+    name?: string;
   }
   interface SelectProps {
     value: string;

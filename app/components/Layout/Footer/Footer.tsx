@@ -15,7 +15,7 @@ import Image from "next/image";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store/store";
-import { addData } from "@/app/store/mainSlice";
+// import { addData } from "@/app/store/slices/userSlice";
 
 import { toast } from "sonner";
 
@@ -34,7 +34,7 @@ const Footer = () => {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     const newData = message;
-    dispatch(addData({ apiEndpoint: "leads", newData }));
+    // dispatch(addData({ apiEndpoint: "leads", newData }));
     setMessage({
       fullname: "",
       email: "",

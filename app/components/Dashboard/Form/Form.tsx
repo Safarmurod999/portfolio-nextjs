@@ -19,6 +19,7 @@ const FormControl = ({
   onChange,
   value,
   width,
+  name,
 }: InputProps) => {
   return (
     <div className={`form-control w-${width}`}>
@@ -30,6 +31,7 @@ const FormControl = ({
         value={value}
         onChange={onChange}
         required={required}
+        name={name}
       />
     </div>
   );

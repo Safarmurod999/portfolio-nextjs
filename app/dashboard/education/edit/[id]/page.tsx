@@ -5,45 +5,62 @@ import {
   FormBtn,
   FormControl,
 } from "@/app/components/Dashboard/Form/Form";
-import { updateData } from "@/app/store/mainSlice";
+import { addData, updateData } from "@/app/store/slices/userSlice";
 import { AppDispatch } from "@/app/store/store";
 import { useParams } from "next/navigation";
 import { useState } from "react";
-import { FaSave } from "react-icons/fa";
+import { IoAddSharp } from "react-icons/io5";
 import { useDispatch } from "react-redux";
 
 const Page = () => {
   const { id } = useParams();
   const [name, setName] = useState("");
+  const [place, setPlace] = useState("");
+  const [date, setDate] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    dispatch(
-      updateData({
-        apiEndpoint: "categories",
-        newData: { name },
-        id: +id,
-      })
-    );
-    setName("");
+    const newData = { name, date, place };
+    dispatch(updateData({ apiEndpoint: "education", newData, id: +id }));
+    // setName("");
   };
-
   return (
-    <section className="category-edit h-[100svh]">
+    <section className="education-create h-[100svh]">
       <div className="admin-container">
-        <Breadcrumb title="Categories Edit" backlink="/dashboard/categories" />
+        <Breadcrumb title="Education Edit" backlink="/dashboard/education" />
         <Form direction="y" width="50" onSubmit={handleSubmit}>
           <div className="flex w-full gap-[10px]">
             <FormControl
               type="text"
-              placeholder="Frontend"
+              placeholder="University"
               label={"Name"}
               onChange={(e) => setName(e.target.value)}
               value={name}
+              required={true}
+              width="full"
+            />
+            <FormControl
+              type="text"
+              placeholder="Tashkent"
+              label={"Place"}
+              onChange={(e) => setPlace(e.target.value)}
+              value={place}
+              required={true}
               width="full"
             />
           </div>
-          <FormBtn text="save" icon={<FaSave />} />
+          <div className="flex w-full gap-[10px]">
+            <FormControl
+              type="date"
+              placeholder="Date"
+              label={"Date"}
+              onChange={(e) => setDate(e.target.value)}
+              value={date}
+              required={true}
+              width="full"
+            />
+          </div>
+          <FormBtn text="add" icon={<IoAddSharp />} />
         </Form>
       </div>
     </section>

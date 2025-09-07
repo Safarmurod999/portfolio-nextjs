@@ -11,6 +11,9 @@ import gsap from "gsap";
 import { useEffect } from "react";
 import { Provider } from "react-redux";
 import { store } from "./store/store";
+import { injectStore } from "./services";
+
+injectStore(store);
 
 export default function RootLayout({
   children,

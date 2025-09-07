@@ -1,7 +1,7 @@
 "use client";
 
 import { Breadcrumb } from "@/app/components";
-import EducationWrapper from "@/app/components/Dashboard/EducationWrapper/EducationWrapper";
+import EducationWrapper from "@/app/components/Wrappers/EducationWrapper/EducationWrapper";
 import { Suspense } from "react";
 
 const Page = () => {

@@ -5,7 +5,7 @@ const Pagination = () => {
     <div className="pagination">
       <div className="per-page">
         <span>Har sahifada</span>
-        <select value={10}>
+        <select value={10} onChange={() => {}}>
           <option value={10}>10</option>
           <option value={20}>20</option>
           <option value={50}>50</option>

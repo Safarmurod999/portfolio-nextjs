@@ -6,31 +6,30 @@ import { AppDataSource } from "@/app/lib/datasource";
 
 export async function GET(req: NextRequest) {
   try {
-    // const url = new URL(req.url);
-    // const queryParams = Object.fromEntries(url.searchParams.entries());
+    const url = new URL(req.url);
+    const queryParams = Object.fromEntries(url.searchParams.entries());
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
     }
-    // const connection = await connectToDatabase();
     const usersRepository = AppDataSource.getRepository(Users);
 
-    // const where: Record<string, any> = {};
-    // if (Object.keys(queryParams).length > 0) {
-    //   Object.keys(queryParams).forEach((key) => {
-    //     if (queryParams[key]) {
-    //       where[key] = ILike(`%${queryParams[key]}%`);
-    //     }
-    //   });
-    // }
+    const where: Record<string, any> = {};
+    if (Object.keys(queryParams).length > 0) {
+      Object.keys(queryParams).forEach((key) => {
+        if (queryParams[key]) {
+          where[key] = ILike(`%${queryParams[key]}%`);
+        }
+      });
+    }
 
-    const users = await usersRepository.find();
+    const users = await usersRepository.find({where: where});
 
     if (!users || users.length === 0) {
       return NextResponse.json({ error: "No users found" }, { status: 404 });
     }
 
     const headers = new Headers();
-    headers.set("Access-Control-Allow-Origin", "*"); // Allow all origins
+    headers.set("Access-Control-Allow-Origin", "*"); 
     headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
     headers.set("Access-Control-Allow-Headers", "*");
 
@@ -47,7 +46,9 @@ export async function GET(req: NextRequest) {
 export async function POST(request: NextRequest) {
   try {
     const data = await request.json();
-
+    if (!AppDataSource.isInitialized) {
+      await AppDataSource.initialize();
+    }    
     if (!data.username || !data.password) {
       return NextResponse.json(
         { error: "Fields are required" },

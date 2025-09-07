@@ -7,28 +7,17 @@ export async function GET(
   { params }: { params: { id?: string } }
 ) {
   try {
-    // const url = new URL(req.url);
-    // const queryParams = Object.fromEntries(url.searchParams.entries());
-
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
-    }    const usersRepository = AppDataSource.getRepository(Users);
-
-    const where: Record<string, any> = {};
-
-    if (params.id) {
-      where.id = params.id;
-    } else {
-      // Object.keys(queryParams).forEach((key) => {
-      //   if (queryParams[key]) {
-      //     where[key] = queryParams[key];
-      //   }
-      // });
     }
-    const users = await usersRepository.find({ where });
+    const usersRepository = AppDataSource.getRepository(Users);
 
-    if (!users || users.length === 0) {
-      return NextResponse.json({ error: "No users found" }, { status: 404 });
+    const users = await usersRepository.findOne({
+      where: { id: params.id as unknown as number },
+    });
+
+    if (!users) {
+      return NextResponse.json({ error: "User not found" }, { status: 404 });
     }
 
     return NextResponse.json(users);

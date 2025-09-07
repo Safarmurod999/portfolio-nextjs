@@ -5,7 +5,7 @@ import {
   FormBtn,
   FormControl,
 } from "@/app/components/Dashboard/Form/Form";
-import { addData } from "@/app/store/mainSlice";
+import { addData } from "@/app/store/slices/userSlice";
 import { AppDispatch } from "@/app/store/store";
 import { useState } from "react";
 import { IoAddSharp } from "react-icons/io5";
@@ -14,13 +14,13 @@ import { useDispatch } from "react-redux";
 const Page = () => {
   const [name, setName] = useState("");
   const [place, setPlace] = useState("");
-  // const [date, setDate] = useState("");
+  const [date, setDate] = useState("");
   const dispatch = useDispatch<AppDispatch>();
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    const newData = { name };
+    const newData = { name, date, place };
     dispatch(addData({ apiEndpoint: "education", newData }));
-    setName("");
+    // setName("");
   };
   return (
     <section className="education-create h-[100svh]">
@@ -43,6 +43,17 @@ const Page = () => {
               label={"Place"}
               onChange={(e) => setPlace(e.target.value)}
               value={place}
+              required={true}
+              width="full"
+            />
+          </div>
+          <div className="flex w-full gap-[10px]">
+            <FormControl
+              type="date"
+              placeholder="Date"
+              label={"Date"}
+              onChange={(e) => setDate(e.target.value)}
+              value={date}
               required={true}
               width="full"
             />

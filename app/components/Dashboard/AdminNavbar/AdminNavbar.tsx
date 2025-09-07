@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import { IoMenuSharp } from "react-icons/io5";
 import ThemeSwitcher from "../../Layout/Header/ThemeSwitcher";
 import { useDispatch } from "react-redux";
-import { handleSidebar } from "@/app/store/stateSlice";
+import { handleSidebar } from "@/app/store/slices/stateSlice";
 
 const AdminNavbar = ({ toggleSidebar }: { toggleSidebar: boolean }) => {
   const dispatch = useDispatch();
