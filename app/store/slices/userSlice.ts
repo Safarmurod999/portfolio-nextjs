@@ -1,19 +1,21 @@
-import UserService from "@/app/services/api/users";
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
+import UserService from "@/app/services/api/users";
+import { User, UserFilter, AddUserDataPayload, UpdateUserDataPayload } from "@/app/types/store/users";
 
-const initialState: DataState = {
+const initialState: DataState<User, UserFilter> = {
   userData: null,
   data: null,
   isLoading: false,
   error: null,
   filter: {
     username: "",
+    active: undefined,
   },
 };
 
 export const fetchUserData = createAsyncThunk(
   "data/fetchUserData",
-  async (params: any, thunkAPI) => {
+  async (params: UserFilter, thunkAPI) => {
     try {
       const response = await UserService.getAllUsers(params);
       return response.data;
@@ -30,7 +32,7 @@ export const fetchUserDetail = createAsyncThunk(
   async (id: string, thunkAPI) => {
     try {
       const response = await UserService.getUserById(id);
-      
+
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
@@ -56,9 +58,9 @@ export const addUserData = createAsyncThunk(
 
 export const updateUserData = createAsyncThunk(
   "data/updateUserData",
-  async ({ id, newData }: UpdateUserDataPayload, thunkAPI) => {
+  async ({ params, id }: UpdateUserDataPayload, thunkAPI) => {
     try {
-      const response = await UserService.updateUser(id.toString(), newData);
+      const response = await UserService.updateUser(id.toString(), params);
 
       return response.data;
     } catch (error: any) {
@@ -89,6 +91,8 @@ const userSlice = createSlice({
   reducers: {
     setUsernameFilter(state, action: PayloadAction<string>) {
       state.filter.username = action.payload;
+      console.log(state.filter.username);
+      
     },
   },
   extraReducers: (builder) => {
@@ -112,7 +116,7 @@ const userSlice = createSlice({
       .addCase(
         fetchUserDetail.fulfilled,
         (state, action: PayloadAction<any>) => {
-          state.isLoading = false;          
+          state.isLoading = false;
           state.userData = action.payload;
         }
       )
@@ -127,8 +131,8 @@ const userSlice = createSlice({
         state.error = null;
       })
       .addCase(addUserData.fulfilled, (state, action: PayloadAction<any>) => {
-        if (state.data && state.data.data) {
-          state.data.data.push(action.payload.data[0]);
+        if (state.data) {          
+          state.data.push(action.payload);
         }
       })
       .addCase(addUserData.rejected, (state, action: PayloadAction<any>) => {
@@ -147,7 +151,6 @@ const userSlice = createSlice({
             if (index !== -1) {
               state.data[index] = action.payload;
             }
-            console.log(state.data[index]);
           }
         }
       )

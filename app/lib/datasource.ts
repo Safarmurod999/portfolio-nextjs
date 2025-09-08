@@ -1,7 +1,5 @@
 import "reflect-metadata";
 import { DataSource } from "typeorm";
-import path from "path";
-import { readFileSync } from "fs";
 import { Projects } from "./entities/Projects";
 import { Users } from "./entities/Users";
 import { Categories } from "./entities/Categories";

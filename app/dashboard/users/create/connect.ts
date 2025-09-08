@@ -6,11 +6,21 @@ import { toast } from "sonner";
 
 const useConnect = () => {
   const dispatch = useDispatch<AppDispatch>();
-  const handleCreate = (values: any) => {
-    dispatch(addUserData(values));
-    toast.success("User created successfully", {
-      position: "top-right",
-      duration: 2000,
+  const handleCreate = (values: Omit<User, "id" | "active">) => {
+    dispatch(addUserData(values)).then((res) => {
+      console.log(res);
+      
+      if (res.type === "data/addUserData/fulfilled") {
+        toast.success("User created successfully", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      } else if (res.type === "data/addUserData/rejected") {
+        toast.error("Error creating user", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      }
     });
   };
 

@@ -41,13 +41,9 @@ declare global {
   }
   interface ProjectInnerProps {
     id: number;
-
     image: StaticImageData;
-
     title: string;
-
     data: string;
-
     url: string;
   }
   interface ProjectWrapperProps {

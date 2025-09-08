@@ -1,3 +1,7 @@
+import { useCallback, useEffect, useState } from "react";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { AppDispatch } from "@/app/store/store";
 import { selectUser } from "@/app/store/selectors/user";
 import {
   deleteUserData,
@@ -5,10 +9,6 @@ import {
   setUsernameFilter,
   updateUserData,
 } from "@/app/store/slices/userSlice";
-import { AppDispatch } from "@/app/store/store";
-import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
 import { toast } from "sonner";
 
 const useConnect = () => {
@@ -21,10 +21,18 @@ const useConnect = () => {
   const { data, isLoading, error, filter } = useSelector(selectUser);
 
   const handleDelete = (id: number) => {
-    dispatch(deleteUserData(id));
-    toast.success("User deleted successfully", {
-      position: "top-right",
-      duration: 2000,
+    dispatch(deleteUserData(id)).then((res) => {
+      if (res.type === "data/deleteUserData/fulfilled") {
+        toast.success("User deleted successfully", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      } else if (res.type === "data/deleteUserData/rejected") {
+        toast.error("Error deleting user", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      }
     });
   };
 
@@ -53,6 +61,11 @@ const useConnect = () => {
     }
     dispatch(setUsernameFilter(username));
   };
+
+  const handleFilterReset = () => {
+    setUsername("");
+    router.push(pathname);
+  };
   const handleUpdate = (
     e: React.ChangeEvent<HTMLInputElement>,
     id: number,
@@ -61,15 +74,25 @@ const useConnect = () => {
     e.preventDefault();
     dispatch(
       updateUserData({
-        newData: { active },
-        id: id,
+        params: { active },
+        id: +id,
       })
-    );
-    toast.success("User updated successfully", {
-      position: "top-right",
-      duration: 2000,
+    ).then((res) => {
+      if (res.type === "data/updateUserData/fulfilled") {
+        toast.success("User updated successfully", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      } else if (res.type === "data/updateUserData/rejected") {
+        toast.error("Error updating user", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      }
     });
   };
+
+
   if (error) {
     console.log(error);
   }
@@ -86,6 +109,7 @@ const useConnect = () => {
     username,
     handleSubmit,
     handleUpdate,
+    handleFilterReset
   };
 };
 

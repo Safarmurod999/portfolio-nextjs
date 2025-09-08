@@ -4,31 +4,37 @@ import { useParams } from "next/navigation";
 import { useFormik } from "formik";
 import { AppDispatch } from "@/app/store/store";
 import { selectUser } from "@/app/store/selectors/user";
-import {
-  fetchUserDetail,
-  updateUserData,
-} from "@/app/store/slices/userSlice";
+import { fetchUserDetail, updateUserData } from "@/app/store/slices/userSlice";
+import { User } from "@/app/types/store/users";
 import { toast } from "sonner";
 
 const useConnect = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
 
-  const {userData, isLoading, error} = useSelector(selectUser);
-  
-  const handleUpdate = (values) => {
+  const { userData, isLoading, error } = useSelector(selectUser);
+
+  const handleUpdate = (values: Omit<User, "id">) => {
     dispatch(
       updateUserData({
-        newData: values,
-        id: +id,
+        params: values,
+        id: id as string | number,
       })
-    );
-    toast.success("User updated successfully", {
-      position: "top-right",
-      duration: 2000,
+    ).then((res) => {
+      if (res.type === "data/updateUserData/fulfilled") {
+        toast.success("User updated successfully", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      } else if (res.type === "data/updateUserData/rejected") {
+        toast.error("Error updating user", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      }
     });
   };
-  
+
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: {
       username: userData?.username,

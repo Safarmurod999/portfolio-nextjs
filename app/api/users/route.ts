@@ -6,11 +6,11 @@ import { AppDataSource } from "@/app/lib/datasource";
 
 export async function GET(req: NextRequest) {
   try {
-    const url = new URL(req.url);
-    const queryParams = Object.fromEntries(url.searchParams.entries());
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
     }
+    const url = new URL(req.url);
+    const queryParams = Object.fromEntries(url.searchParams.entries());
     const usersRepository = AppDataSource.getRepository(Users);
 
     const where: Record<string, any> = {};
@@ -20,8 +20,7 @@ export async function GET(req: NextRequest) {
           where[key] = ILike(`%${queryParams[key]}%`);
         }
       });
-    }
-
+    }    
     const users = await usersRepository.find({where: where});
 
     if (!users || users.length === 0) {

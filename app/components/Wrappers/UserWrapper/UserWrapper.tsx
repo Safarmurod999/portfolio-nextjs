@@ -22,6 +22,7 @@ const UserWrapper = () => {
     username,
     handleSubmit,
     handleUpdate,
+    handleFilterReset
   } = useConnect();
 
   return (
@@ -35,6 +36,9 @@ const UserWrapper = () => {
             onChange={handleSearch}
           />
           <FormBtn text="Search" />
+          <button onClick={handleFilterReset} className="form-button">
+            Reset
+          </button>
         </Form>
         <div className="flex">
           <Link
