@@ -52,6 +52,20 @@ declare global {
     options: any;
     width?: string;
     disabled?: boolean;
+    name?: string;
+  }
+  interface OptionProps {
+    label: string;
+    value: string | number;
+  }
+
+  interface MultiSelectProps {
+    label?: string;
+    placeholder?: string;
+    options: OptionProps[];
+    value: string[] | number[];
+    onChange: (val: (string | number)[]) => void;
+    width?: string;
   }
   interface OptionProps {
     value: string | number;

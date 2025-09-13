@@ -15,9 +15,10 @@ import Image from "next/image";
 
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store/store";
-// import { addData } from "@/app/store/slices/userSlice";
 
 import { toast } from "sonner";
+import { useFormik } from "formik";
+import { addLeadData } from "@/app/store/slices/leadsSlice";
 
 const Footer = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -31,20 +32,31 @@ const Footer = () => {
   ) => {
     setMessage({ ...message, [e.target.name]: e.target.value });
   };
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newData = message;
-    // dispatch(addData({ apiEndpoint: "leads", newData }));
-    setMessage({
+  const handleSend = (values) => {
+    dispatch(addLeadData(values)).then((res) => {
+      if (res.type === "data/addLeadData/fulfilled") {
+        toast.success("Message sent successfully", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      } else if (res.type === "data/addLeadData/rejected") {
+        toast.error("Error sending message", {
+          position: "bottom-right",
+          duration: 2000,
+        });
+      }
+    });
+  };
+
+  const { values, handleChange, handleSubmit } = useFormik({
+    initialValues: {
       fullname: "",
       email: "",
       message: "",
-    });
-    toast.success("Lead created successfully", {
-      position: "top-right",
-      duration: 2000,
-    });
-  };
+    },
+    onSubmit: handleSend,
+    enableReinitialize: true,
+  });
   return (
     <footer id="footer" className="footer">
       <div className="container">
@@ -115,6 +127,7 @@ const Footer = () => {
               </a>
             </li>
             <li>
+              t
               <a
                 href="https://www.linkedin.com/in/safarmurod999/"
                 aria-label="Linkedin"
@@ -132,21 +145,21 @@ const Footer = () => {
               className="footer__form--input"
               placeholder="Your Full Name"
               name="fullname"
-              value={message.fullname}
-              onChange={(e) => onChangeHandler(e)}
+              value={values.fullname}
+              onChange={handleChange}
             />
             <input
               type="email"
               className="footer__form--input"
               placeholder="Email Address"
               name="email"
-              value={message.email}
-              onChange={(e) => onChangeHandler(e)}
+              value={values.email}
+              onChange={handleChange}
             />
             <textarea
               name="message"
-              value={message.message}
-              onChange={(e) => onChangeHandler(e)}
+              value={values.message}
+              onChange={handleChange}
               placeholder="You message"
             ></textarea>
             <button className="footer__btn" type="submit">

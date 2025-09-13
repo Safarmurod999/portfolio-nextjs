@@ -1,7 +1,7 @@
 export {};
 declare global {
   interface DataState<T, U> {
-    userData: T | null;
+    detail: T | null;
     data: T[] | null;
     isLoading: boolean;
     error: string | null;

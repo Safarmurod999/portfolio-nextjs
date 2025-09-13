@@ -1,84 +1,29 @@
 "use client";
-import { useFetchData } from "@/app/hooks/useFetch";
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { deleteData, updateData } from "@/app/store/slices/userSlice";
-import { AppDispatch } from "@/app/store/store";
+import React from "react";
 import Pagination from "@/app/components/Dashboard/Pagination/Pagination";
-import { Form, FormBtn, FormControl, FormSwitch } from "@/app/components/Dashboard/Form/Form";
+import {
+  Form,
+  FormBtn,
+  FormControl,
+  FormSwitch,
+} from "@/app/components/Dashboard/Form/Form";
 import { MdDeleteOutline } from "react-icons/md";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
 import Link from "next/link";
 import { IoAddSharp } from "react-icons/io5";
 import { CiEdit } from "react-icons/ci";
+import useConnect from "./connect";
 
 const EducationWrapper = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [name, setName] = useState(searchParams.get("name") || "");
-  const dispatch = useDispatch<AppDispatch>();
-  const { data: education, isLoading, error } = useFetchData(`education`);
-  // ${
-  //   searchParams.get("name") ? `?name=${searchParams.get("name")}` : ""
-  // }
-  const handleDelete = (id: number) => {
-    dispatch(deleteData({ apiEndpoint: "education", id }));
-    toast.success("Education deleted successfully", {
-      position: "top-right",
-      duration: 2000,
-    });
-  };
-
-  const handleSearch = (e: any) => {
-    setName(e.target.value);
-  };
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set(name, value);
-      return newParams.toString();
-    },
-    [searchParams]
-  );
-  useEffect(() => {
-    if (!name.trim()) {
-      router.push(pathname);
-    }
-  }, [name, router, pathname]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (name.trim()) {
-      router.push(pathname + "?" + createQueryString("name", name));
-    }
-  };
-  const handleUpdate = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    id: number,
-    active: boolean
-  ) => {
-    e.preventDefault();
-
-    dispatch(
-      updateData({
-        apiEndpoint: "education",
-        newData: { active },
-        id: id,
-      })
-    );
-    toast.success("Lead updated successfully", {
-      position: "top-right",
-      duration: 2000,
-    });
-  };
-  if (error) {
-    console.log(error);
-  }
-
+  const {
+    education,
+    isLoading,
+    handleDelete,
+    handleSearch,
+    name,
+    handleSubmit,
+    handleUpdate,
+    handleFilterReset,
+  } = useConnect();
   return (
     <div className="data-table-container">
       <div className="flex justify-between items-stretch">
@@ -87,9 +32,13 @@ const EducationWrapper = () => {
             type="text"
             placeholder="Name"
             value={name}
+            name="name"
             onChange={handleSearch}
           />
           <FormBtn text="Search" />
+          <button onClick={handleFilterReset} className="form-button">
+            Reset
+          </button>
         </Form>
         <div className="flex">
           <Link

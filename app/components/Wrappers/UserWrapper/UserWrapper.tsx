@@ -57,7 +57,7 @@ const UserWrapper = () => {
             <tr>
               <th>№</th>
               <th>Username</th>
-              <th>Passsword</th>
+              <th>Password</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>

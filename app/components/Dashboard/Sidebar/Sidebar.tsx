@@ -43,6 +43,12 @@ const adminRoutes = [
     path: "/dashboard/education",
     icon: <FaUniversity />,
   },
+  {
+    id: 6,
+    name: "Projects",
+    path: "/dashboard/projects",
+    icon: <TbMessage2Dollar />,
+  },
 ];
 
 const Sidebar = ({ toggleSidebar }: { toggleSidebar: boolean }) => {

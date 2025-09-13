@@ -21,6 +21,61 @@
     }
   }
 
+  &-multi {
+    position: relative;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between;
+    gap: 10px;
+    &-control {
+      @extend .form-input;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      cursor: pointer;
+      user-select: none;
+    }
+
+    &-options {
+      position: absolute;
+      top: 100%;
+      left: 0;
+      width: 100%;
+      background-color: var(--bg-color-2);
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      margin-top: 4px;
+      max-height: 200px;
+      overflow-y: auto;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      z-index: 100;
+
+      .form-multi-option {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 12px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: background-color 0.2s ease;
+        input {
+          cursor: pointer;
+        }
+
+        &:hover {
+          background-color: var(--primary-color);
+        }
+
+        &.selected {
+          background-color: rgba(var(--primary-rgb), 0.1);
+        }
+      }
+    }
+  }
+
   &-select {
     padding: 8px 16px;
     background-color: var(--primary-color);
@@ -43,14 +98,14 @@
     cursor: pointer;
 
     input {
-      display: none; 
+      display: none;
     }
 
     .toggle {
       position: relative;
-      width: 44px; 
-      height: 24px; 
-      background-color: #e5e7eb; 
+      width: 44px;
+      height: 24px;
+      background-color: #e5e7eb;
       border-radius: 9999px;
       transition: background-color 0.2s;
 
@@ -59,7 +114,7 @@
       }
 
       &.checked {
-        background-color: var(--primary-color); 
+        background-color: var(--primary-color);
       }
 
       &::after {
@@ -67,14 +122,13 @@
         position: absolute;
         top: 2px;
         left: 2px;
-        width: 20px; 
-        height: 20px; 
+        width: 20px;
+        height: 20px;
         background-color: #fff;
-        border: 1px solid #d1d5db; 
-        border-radius: 9999px; 
+        border: 1px solid #d1d5db;
+        border-radius: 9999px;
         transition: all 0.2s;
 
-      
         .rtl & {
           transform: translateX(0);
         }
@@ -82,7 +136,7 @@
 
       &.checked::after {
         transform: translateX(99%);
-        border-color: #fff; 
+        border-color: #fff;
       }
     }
   }

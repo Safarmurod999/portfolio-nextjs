@@ -5,23 +5,11 @@ import {
   FormBtn,
   FormControl,
 } from "@/app/components/Dashboard/Form/Form";
-import { addData } from "@/app/store/slices/userSlice";
-import { AppDispatch } from "@/app/store/store";
-import { useState } from "react";
 import { IoAddSharp } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import useConnect from "./connect";
 
 const Page = () => {
-  const [name, setName] = useState("");
-  const [place, setPlace] = useState("");
-  const [date, setDate] = useState("");
-  const dispatch = useDispatch<AppDispatch>();
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newData = { name, date, place };
-    dispatch(addData({ apiEndpoint: "education", newData }));
-    // setName("");
-  };
+  const { handleSubmit, handleChange, values } = useConnect();
   return (
     <section className="education-create h-[100svh]">
       <div className="admin-container">
@@ -32,8 +20,9 @@ const Page = () => {
               type="text"
               placeholder="University"
               label={"Name"}
-              onChange={(e) => setName(e.target.value)}
-              value={name}
+              onChange={handleChange}
+              value={values.name}
+              name="name"
               required={true}
               width="full"
             />
@@ -41,8 +30,9 @@ const Page = () => {
               type="text"
               placeholder="Tashkent"
               label={"Place"}
-              onChange={(e) => setPlace(e.target.value)}
-              value={place}
+              onChange={handleChange}
+              value={values.place}
+              name="place"
               required={true}
               width="full"
             />
@@ -52,8 +42,9 @@ const Page = () => {
               type="date"
               placeholder="Date"
               label={"Date"}
-              onChange={(e) => setDate(e.target.value)}
-              value={date}
+              onChange={handleChange}
+              value={values.date}
+              name="date"
               required={true}
               width="full"
             />

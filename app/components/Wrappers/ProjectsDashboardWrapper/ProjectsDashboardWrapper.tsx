@@ -12,10 +12,11 @@ import Link from "next/link";
 import { IoAddSharp } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
+import { Projects } from "@/app/types/store/projects";
 
-const CategoriesWrapper = () => {
+const ProjectsWrapper = () => {
   const {
-    categories,
+    projects,
     isLoading,
     handleDelete,
     handleSearch,
@@ -31,7 +32,7 @@ const CategoriesWrapper = () => {
         <Form width="[300px]" onSubmit={handleSubmit}>
           <FormControl
             type="text"
-            placeholder="Category Name"
+            placeholder="Project Name"
             value={name || ""}
             onChange={handleSearch}
             name="name"
@@ -43,7 +44,7 @@ const CategoriesWrapper = () => {
         </Form>
         <div className="flex">
           <Link
-            href={"/dashboard/categories/create"}
+            href={"/dashboard/projects/create"}
             className="form-button flex items-center text-white"
           >
             <IoAddSharp />
@@ -69,30 +70,30 @@ const CategoriesWrapper = () => {
                   <p className="text-center"> Loading...</p>
                 </td>
               </tr>
-            ) : categories ? (
-              categories.map((category: Category) => (
-                <tr key={category.id}>
-                  <td>{category.id}</td>
-                  <td>{category.name}</td>
+            ) : projects ? (
+              projects.map((project: Projects) => (
+                <tr key={project.id}>
+                  <td>{project.id}</td>
+                  <td>{project.title}</td>
                   <td>
                     {" "}
                     <FormSwitch
                       onChange={(e) =>
-                        handleUpdate(e, category.id, !category.active)
+                        handleUpdate(e, project.id, !project.active)
                       }
-                      value={category.active}
+                      value={project.active}
                     />
                   </td>
                   <td>
                     <div className="flex justify-start items-center gap-2">
                       <Link
-                        href={`/dashboard/categories/edit/${category.id}`}
+                        href={`/dashboard/projects/edit/${project.id}`}
                         className="action-btn"
                       >
                         <CiEdit />
                       </Link>
                       <button
-                        onClick={() => handleDelete(category.id)}
+                        onClick={() => handleDelete(project.id)}
                         className="action-btn"
                       >
                         <MdDeleteOutline />
@@ -116,4 +117,4 @@ const CategoriesWrapper = () => {
   );
 };
 
-export default CategoriesWrapper;
+export default ProjectsWrapper;

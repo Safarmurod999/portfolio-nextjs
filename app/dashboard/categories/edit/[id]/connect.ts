@@ -3,31 +3,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { useFormik } from "formik";
 import { AppDispatch } from "@/app/store/store";
-import { selectUser } from "@/app/store/selectors/user";
-import { fetchUserDetail, updateUserData } from "@/app/store/slices/userSlice";
-import { User } from "@/app/types/store/users";
+import { selectCategory } from "@/app/store/selectors/categories";
+import { fetchCategoryDetail, updateCategoryData } from "@/app/store/slices/categoriesSlice";
+import { Category } from "@/app/types/store/categories";
 import { toast } from "sonner";
 
 const useConnect = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
 
-  const { detail, isLoading, error } = useSelector(selectUser);
+  const { detail, isLoading, error } = useSelector(selectCategory);
 
-  const handleUpdate = (values: Omit<User, "id">) => {
+  const handleUpdate = (values: Omit<Category, "id">) => {
     dispatch(
-      updateUserData({
+      updateCategoryData({
         params: values,
         id: id as string | number,
       })
     ).then((res) => {
-      if (res.type === "data/updateUserData/fulfilled") {
-        toast.success("User updated successfully", {
+      if (res.type === "data/updateCategoryData/fulfilled") {
+        toast.success("Category updated successfully", {
           position: "bottom-right",
           duration: 2000,
         });
-      } else if (res.type === "data/updateUserData/rejected") {
-        toast.error("Error updating user", {
+      } else if (res.type === "data/updateCategoryData/rejected") {
+        toast.error("Error updating category", {
           position: "bottom-right",
           duration: 2000,
         });
@@ -37,15 +37,14 @@ const useConnect = () => {
 
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: {
-      username: detail?.username,
-      password: detail?.password,
+      name: detail?.name,
     },
     onSubmit: handleUpdate,
     enableReinitialize: true,
   });
 
   useEffect(() => {
-    dispatch(fetchUserDetail(id as string));
+    dispatch(fetchCategoryDetail(id as string));
   }, [dispatch]);
 
   return {

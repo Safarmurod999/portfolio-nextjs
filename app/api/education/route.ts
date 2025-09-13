@@ -2,14 +2,28 @@
 import { NextRequest, NextResponse } from "next/server";
 import { AppDataSource } from "@/app/lib/datasource";
 import { Education } from "@/app/lib/entities/Education";
+import { ILike } from "typeorm";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
     }
+
+    const url = new URL(req.url);
+    const queryParams = Object.fromEntries(url.searchParams.entries());
+
     const educationRepository = AppDataSource.getRepository(Education);
-    const data = await educationRepository.find();
+
+    const where: Record<string, any> = {};
+    if (Object.keys(queryParams).length > 0) {
+      Object.keys(queryParams).forEach((key) => {
+        if (queryParams[key]) {
+          where[key] = ILike(`%${queryParams[key]}%`);
+        }
+      });
+    }
+    const data = await educationRepository.find({ where });
     return NextResponse.json(data);
   } catch (error) {
     console.error("Database error:", error);

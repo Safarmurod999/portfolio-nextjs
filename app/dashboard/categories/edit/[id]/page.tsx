@@ -5,28 +5,15 @@ import {
   FormBtn,
   FormControl,
 } from "@/app/components/Dashboard/Form/Form";
-import { updateData } from "@/app/store/slices/userSlice";
-import { AppDispatch } from "@/app/store/store";
-import { useParams } from "next/navigation";
-import { useState } from "react";
 import { FaSave } from "react-icons/fa";
-import { useDispatch } from "react-redux";
+import useConnect from "./connect";
 
 const Page = () => {
-  const { id } = useParams();
-  const [name, setName] = useState("");
-  const dispatch = useDispatch<AppDispatch>();
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    dispatch(
-      updateData({
-        apiEndpoint: "categories",
-        newData: { name },
-        id: +id,
-      })
-    );
-    setName("");
-  };
+  const {
+    handleSubmit,
+    handleChange,
+    values: { name },
+  } = useConnect();
 
   return (
     <section className="category-edit h-[100svh]">
@@ -38,8 +25,10 @@ const Page = () => {
               type="text"
               placeholder="Frontend"
               label={"Name"}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleChange}
               value={name}
+              name="name"
+              required={true}
               width="full"
             />
           </div>

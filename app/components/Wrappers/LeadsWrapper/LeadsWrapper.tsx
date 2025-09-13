@@ -1,88 +1,26 @@
 "use client";
-import { useFetchData } from "@/app/hooks/useFetch";
-import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
-import { deleteData, updateData } from "@/app/store/slices/userSlice";
-import { AppDispatch } from "@/app/store/store";
+import React from "react";
 import Pagination from "../../Dashboard/Pagination/Pagination";
-import { Form, FormBtn, FormControl, FormSwitch } from "../../Dashboard/Form/Form";
+import {
+  Form,
+  FormBtn,
+  FormControl,
+  FormSwitch,
+} from "../../Dashboard/Form/Form";
 import { MdDeleteOutline } from "react-icons/md";
-import { usePathname, useSearchParams } from "next/navigation";
-import { useRouter } from "next/navigation";
-import { toast } from "sonner";
+import useConnect from "./connect";
 
 const LeadsWrapper = () => {
-  const router = useRouter();
-  const pathname = usePathname();
-  const searchParams = useSearchParams();
-  const [fullname, setFullname] = useState(searchParams.get("fullname") || "");
-  const dispatch = useDispatch<AppDispatch>();
   const {
-    data: leads,
+    leads,
     isLoading,
-    error,
-  } = useFetchData(
-    `leads${
-      searchParams.get("fullname")
-        ? `?fullname=${searchParams.get("fullname")}`
-        : ""
-    }`
-  );
-
-  const handleDelete = (id: number) => {
-    dispatch(deleteData({ apiEndpoint: "leads", id }));
-    toast.success("Lead deleted successfully", {
-      position: "top-right",
-      duration: 2000,
-    });
-  };
-
-  const handleSearch = (e: any) => {
-    setFullname(e.target.value);
-  };
-
-  const createQueryString = useCallback(
-    (name: string, value: string) => {
-      const newParams = new URLSearchParams(searchParams);
-      newParams.set(name, value);
-      return newParams.toString();
-    },
-    [searchParams]
-  );
-  useEffect(() => {
-    if (!fullname.trim()) {
-      router.push(pathname);
-    }
-  }, [fullname, router, pathname]);
-
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (fullname.trim()) {
-      router.push(pathname + "?" + createQueryString("fullname", fullname));
-    }
-  };
-  const handleUpdate = (
-    e: React.ChangeEvent<HTMLInputElement>,
-    id: number,
-    active: boolean
-  ) => {
-    e.preventDefault();
-
-    dispatch(
-      updateData({
-        apiEndpoint: "leads",
-        newData: { active },
-        id: id,
-      })
-    );
-    toast.success("Lead updated successfully", {
-      position: "top-right",
-      duration: 2000,
-    });
-  };
-  if (error) {
-    console.log(error);
-  }
+    fullname,
+    handleDelete,
+    handleSearch,
+    handleSubmit,
+    handleUpdate,
+    handleFilterReset
+  } = useConnect();
 
   return (
     <div className="data-table-container">
@@ -92,9 +30,13 @@ const LeadsWrapper = () => {
             type="text"
             placeholder="Fullname"
             value={fullname}
+            name="fullname"
             onChange={handleSearch}
           />
           <FormBtn text="Search" />
+          <button onClick={handleFilterReset} className="form-button">
+            Reset
+          </button>
         </Form>
         <div className="flex"></div>
       </div>

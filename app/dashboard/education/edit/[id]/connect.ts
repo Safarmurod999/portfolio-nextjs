@@ -3,31 +3,34 @@ import { useDispatch, useSelector } from "react-redux";
 import { useParams } from "next/navigation";
 import { useFormik } from "formik";
 import { AppDispatch } from "@/app/store/store";
-import { selectUser } from "@/app/store/selectors/user";
-import { fetchUserDetail, updateUserData } from "@/app/store/slices/userSlice";
-import { User } from "@/app/types/store/users";
+import { selectEducation } from "@/app/store/selectors/education";
+import {
+  fetchEducationDetail,
+  updateEducationData,
+} from "@/app/store/slices/educationSlice";
+import { Education } from "@/app/types/store/education";
 import { toast } from "sonner";
 
 const useConnect = () => {
   const dispatch = useDispatch<AppDispatch>();
   const { id } = useParams();
 
-  const { detail, isLoading, error } = useSelector(selectUser);
+  const { detail, isLoading, error } = useSelector(selectEducation);
 
-  const handleUpdate = (values: Omit<User, "id">) => {
+  const handleUpdate = (values: Omit<Education, "id">) => {
     dispatch(
-      updateUserData({
+      updateEducationData({
         params: values,
         id: id as string | number,
       })
     ).then((res) => {
-      if (res.type === "data/updateUserData/fulfilled") {
-        toast.success("User updated successfully", {
+      if (res.type === "data/updateEducationData/fulfilled") {
+        toast.success("Education updated successfully", {
           position: "bottom-right",
           duration: 2000,
         });
-      } else if (res.type === "data/updateUserData/rejected") {
-        toast.error("Error updating user", {
+      } else if (res.type === "data/updateEducationData/rejected") {
+        toast.error("Error updating education", {
           position: "bottom-right",
           duration: 2000,
         });
@@ -37,15 +40,16 @@ const useConnect = () => {
 
   const { values, handleChange, handleSubmit } = useFormik({
     initialValues: {
-      username: detail?.username,
-      password: detail?.password,
+      name: detail?.name,
+      place: detail?.place,
+      date: detail?.date,
     },
     onSubmit: handleUpdate,
     enableReinitialize: true,
   });
 
   useEffect(() => {
-    dispatch(fetchUserDetail(id as string));
+    dispatch(fetchEducationDetail(id as string));
   }, [dispatch]);
 
   return {

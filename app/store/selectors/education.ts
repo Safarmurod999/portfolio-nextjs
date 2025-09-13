@@ -1,0 +1,1 @@
+export const selectEducation = (state: any) => state.education;

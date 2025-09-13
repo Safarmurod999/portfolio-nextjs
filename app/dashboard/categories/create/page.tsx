@@ -5,21 +5,16 @@ import {
   FormBtn,
   FormControl,
 } from "@/app/components/Dashboard/Form/Form";
-import { addData } from "@/app/store/slices/userSlice";
-import { AppDispatch } from "@/app/store/store";
-import { useState } from "react";
 import { IoAddSharp } from "react-icons/io5";
-import { useDispatch } from "react-redux";
+import useConnect from "./connect";
 
 const Page = () => {
-  const [name, setName] = useState("");
-  const dispatch = useDispatch<AppDispatch>();
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    const newData = { name };
-    dispatch(addData({ apiEndpoint: "categories", newData }));
-    setName("");
-  };
+  const {
+    handleSubmit,
+    handleChange,
+    values: { name },
+  } = useConnect();
+
   return (
     <section className="category-create h-[100svh]">
       <div className="admin-container">
@@ -33,8 +28,9 @@ const Page = () => {
               type="text"
               placeholder="Frontend"
               label={"Name"}
-              onChange={(e) => setName(e.target.value)}
+              onChange={handleChange}
               value={name}
+              name="name"
               required={true}
               width="full"
             />

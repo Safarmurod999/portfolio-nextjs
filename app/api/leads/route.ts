@@ -1,15 +1,29 @@
-import { AppDataSource } from "@/app/lib/datasource";
 // app/api/leads/route.ts
+import { AppDataSource } from "@/app/lib/datasource";
 import { NextRequest, NextResponse } from "next/server";
 import { Leads } from "../../lib/entities/Leads";
+import { ILike } from "typeorm";
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
-        if (!AppDataSource.isInitialized) {
+    if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
     }
+
+    const url = new URL(req.url);
+    const queryParams = Object.fromEntries(url.searchParams.entries());
+
     const leadsRepository = AppDataSource.getRepository(Leads);
-    const leads = await leadsRepository.find();
+
+    const where: Record<string, any> = {};
+    if (Object.keys(queryParams).length > 0) {
+      Object.keys(queryParams).forEach((key) => {
+        if (queryParams[key]) {
+          where[key] = ILike(`%${queryParams[key]}%`);
+        }
+      });
+    }
+    const leads = await leadsRepository.find({ where });
     return NextResponse.json(leads);
   } catch (error) {
     console.error("Database error:", error);
@@ -22,7 +36,7 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   try {
-        if (!AppDataSource.isInitialized) {
+    if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
     }
     const data = await request.json();

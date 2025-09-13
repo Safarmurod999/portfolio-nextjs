@@ -88,6 +88,7 @@ export async function PUT(
     }
 
     (education.name = data.name || education.name),
+      (education.place = data.place || education.place),
       (education.active = data.active ?? education.active);
     await educationRepository.save(education);
     return NextResponse.json(education);

@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 const Form = ({ children, onSubmit, direction = "x", width }: FormProps) => {
   return (
     <form
@@ -45,6 +47,7 @@ const FormSelect = ({
   value,
   options,
   width,
+  name,
 }: SelectProps) => {
   return (
     <div className={`form-control w-${width}`}>
@@ -54,6 +57,7 @@ const FormSelect = ({
         value={value}
         onChange={onChange}
         required={required}
+        name={name}
       >
         <option value="">{placeholder}</option>
         {options.map((option: OptionProps) => (
@@ -62,6 +66,64 @@ const FormSelect = ({
           </option>
         ))}
       </select>
+    </div>
+  );
+};
+
+const FormMultiSelect = ({
+  label,
+  placeholder = "Select options",
+  options,
+  value,
+  onChange,
+  width,
+}: MultiSelectProps & { value: (string | number)[]; onChange: (val: (string | number)[]) => void }) => {
+  const [open, setOpen] = useState(false);
+
+  const handleSelect = (val: string | number) => {
+    if (value.includes(val)) {
+      onChange(value.filter((v) => v !== val));
+    } else {
+      onChange([...value, val]);
+    }
+  };
+
+  return (
+    <div className="form-multi">
+      {label && <label className="form-label">{label}</label>}
+      <div
+        className="form-multi-control"
+        onClick={() => setOpen((prev) => !prev)}
+      >
+        {value.length > 0
+          ? options
+              .filter((opt) => value.includes(opt.value))
+              .map((opt) => opt.label)
+              .join(", ")
+          : placeholder}
+        <span>▼</span>
+      </div>
+
+      {open && (
+        <div className="form-multi-options">
+          {options.map((opt) => (
+            <div
+              key={opt.value}
+              className={`form-multi-option ${
+                value.includes(opt.value) ? "selected" : ""
+              }`}
+              onClick={() => handleSelect(opt.value)}
+            >
+              <input
+                type="checkbox"
+                checked={value.includes(opt.value)}
+                readOnly
+              />
+              {opt.label}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };
@@ -83,4 +145,30 @@ const FormBtn = ({ text, icon }: BtnProps) => {
     </button>
   );
 };
-export { Form, FormControl, FormSelect, FormBtn, FormSwitch };
+
+const FormImage = ({ label, onChange, width, name }) => {
+  return (
+    <div className={`form-control w-${width}`}>
+      <label htmlFor={name} className="form-label">
+        {label}
+      </label>
+      <input
+        className="form-input"
+        type="file"
+        id={name}
+        name={name}
+        accept="image/png image/jpeg image/jpg"
+        onChange={onChange}
+      />
+    </div>
+  );
+};
+export {
+  Form,
+  FormControl,
+  FormSelect,
+  FormMultiSelect,
+  FormBtn,
+  FormSwitch,
+  FormImage,
+};

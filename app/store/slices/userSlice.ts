@@ -3,7 +3,7 @@ import UserService from "@/app/services/api/users";
 import { User, UserFilter, AddUserDataPayload, UpdateUserDataPayload } from "@/app/types/store/users";
 
 const initialState: DataState<User, UserFilter> = {
-  userData: null,
+  detail: null,
   data: null,
   isLoading: false,
   error: null,
@@ -117,7 +117,7 @@ const userSlice = createSlice({
         fetchUserDetail.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false;
-          state.userData = action.payload;
+          state.detail = action.payload;
         }
       )
       .addCase(
