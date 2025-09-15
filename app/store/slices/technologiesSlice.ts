@@ -1,27 +1,27 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import ProjectsService from "@/app/services/api/projects";
+import TechnologiesService from "@/app/services/api/technologies";
 import {
-  Projects,
-  ProjectsFilter,
-  AddProjectDataPayload,
-  UpdateProjectDataPayload,
-} from "@/app/types/store/projects";
+  Technology,
+  TechnologyFilter,
+  AddTechnologyDataPayload,
+  UpdateTechnologyDataPayload,
+} from "@/app/types/store/technologies";
 
-const initialState: DataState<Projects, ProjectsFilter> = {
+const initialState: DataState<Technology, TechnologyFilter> = {
   detail: null,
   data: null,
   isLoading: false,
   error: null,
   filter: {
-    title: "",
+    name: "",
   },
 };
 
-export const fetchProjectData = createAsyncThunk(
-  "data/fetchProjectData",
-  async (params: ProjectsFilter, thunkAPI) => {
+export const fetchTechnologyData = createAsyncThunk(
+  "data/fetchTechnologyData",
+  async (params: TechnologyFilter, thunkAPI) => {
     try {
-      const response = await ProjectsService.getAllProjects(params);
+      const response = await TechnologiesService.getAllTechnologies(params);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
@@ -31,11 +31,11 @@ export const fetchProjectData = createAsyncThunk(
   }
 );
 
-export const fetchProjectDetail = createAsyncThunk(
-  "data/fetchProjectDetail",
+export const fetchTechnologyDetail = createAsyncThunk(
+  "data/fetchTechnologyDetail",
   async (id: string, thunkAPI) => {
     try {
-      const response = await ProjectsService.getProjectById(id);
+      const response = await TechnologiesService.getTechnologyById(id);
 
       return response.data;
     } catch (error: any) {
@@ -46,11 +46,11 @@ export const fetchProjectDetail = createAsyncThunk(
   }
 );
 
-export const addProjectData = createAsyncThunk(
-  "data/addProjectData",
-  async (newData: any, thunkAPI) => {
+export const addTechnologyData = createAsyncThunk(
+  "data/addTechnologyData",
+  async (newData: AddTechnologyDataPayload, thunkAPI) => {
     try {
-      const response = await ProjectsService.createProject(newData);
+      const response = await TechnologiesService.createTechnology(newData);
       return response.data;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
@@ -60,11 +60,11 @@ export const addProjectData = createAsyncThunk(
   }
 );
 
-export const updateProjectData = createAsyncThunk(
-  "data/updateProjectData",
-  async ({ params, id }: any, thunkAPI) => {
+export const updateTechnologyData = createAsyncThunk(
+  "data/updateTechnologyData",
+  async ({ params, id }: UpdateTechnologyDataPayload, thunkAPI) => {
     try {
-      const response = await ProjectsService.updateProject(
+      const response = await TechnologiesService.updateTechnology(
         id.toString(),
         params
       );
@@ -78,11 +78,11 @@ export const updateProjectData = createAsyncThunk(
   }
 );
 
-export const deleteProjectData = createAsyncThunk(
-  "data/deleteProjectData",
+export const deleteTechnologyData = createAsyncThunk(
+  "data/deleteTechnologyData",
   async (id: number, thunkAPI) => {
     try {
-      await ProjectsService.deleteProject(id.toString());
+      await TechnologiesService.deleteTechnology(id.toString());
       return id;
     } catch (error: any) {
       return thunkAPI.rejectWithValue(
@@ -92,71 +92,75 @@ export const deleteProjectData = createAsyncThunk(
   }
 );
 
-const projectsSlice = createSlice({
-  name: "projects",
+const technologiesSlice = createSlice({
+  name: "technologies",
   initialState,
   reducers: {
-    setTitleFilter(state, action: PayloadAction<string>) {
-      state.filter.title = action.payload;
+    setNameFilter(state, action: PayloadAction<string>) {
+      state.filter.name = action.payload;
+      console.log(state.filter.name);
     },
   },
   extraReducers: (builder) => {
     builder
-      .addCase(fetchProjectData.pending, (state) => {
+      .addCase(fetchTechnologyData.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(
-        fetchProjectData.fulfilled,
+        fetchTechnologyData.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false;
           state.data = action.payload;
         }
       )
       .addCase(
-        fetchProjectData.rejected,
+        fetchTechnologyData.rejected,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false;
           state.error = action.payload;
         }
       )
-      .addCase(fetchProjectDetail.pending, (state) => {
+      .addCase(fetchTechnologyDetail.pending, (state) => {
         state.isLoading = true;
         state.error = null;
       })
       .addCase(
-        fetchProjectDetail.fulfilled,
+        fetchTechnologyDetail.fulfilled,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false;
           state.detail = action.payload;
         }
       )
       .addCase(
-        fetchProjectDetail.rejected,
+        fetchTechnologyDetail.rejected,
         (state, action: PayloadAction<any>) => {
           state.isLoading = false;
           state.error = action.payload;
         }
       )
-      .addCase(addProjectData.pending, (state) => {
+      .addCase(addTechnologyData.pending, (state) => {
         state.error = null;
       })
       .addCase(
-        addProjectData.fulfilled,
+        addTechnologyData.fulfilled,
         (state, action: PayloadAction<any>) => {
           if (state.data) {
             state.data.push(action.payload);
           }
         }
       )
-      .addCase(addProjectData.rejected, (state, action: PayloadAction<any>) => {
-        state.error = action.payload;
-      })
-      .addCase(updateProjectData.pending, (state) => {
+      .addCase(
+        addTechnologyData.rejected,
+        (state, action: PayloadAction<any>) => {
+          state.error = action.payload;
+        }
+      )
+      .addCase(updateTechnologyData.pending, (state) => {
         state.error = null;
       })
       .addCase(
-        updateProjectData.fulfilled,
+        updateTechnologyData.fulfilled,
         (state, action: PayloadAction<any>) => {
           if (state.data) {
             const index = state.data.findIndex(
@@ -169,16 +173,16 @@ const projectsSlice = createSlice({
         }
       )
       .addCase(
-        updateProjectData.rejected,
+        updateTechnologyData.rejected,
         (state, action: PayloadAction<any>) => {
           state.error = action.payload;
         }
       )
-      .addCase(deleteProjectData.pending, (state) => {
+      .addCase(deleteTechnologyData.pending, (state) => {
         state.error = null;
       })
       .addCase(
-        deleteProjectData.fulfilled,
+        deleteTechnologyData.fulfilled,
         (state, action: PayloadAction<number>) => {
           if (state.data && state.data) {
             state.data = state.data.filter(
@@ -188,7 +192,7 @@ const projectsSlice = createSlice({
         }
       )
       .addCase(
-        deleteProjectData.rejected,
+        deleteTechnologyData.rejected,
         (state, action: PayloadAction<any>) => {
           state.error = action.payload;
         }
@@ -196,5 +200,5 @@ const projectsSlice = createSlice({
   },
 });
 
-export default projectsSlice.reducer;
-export const { setTitleFilter } = projectsSlice.actions;
+export default technologiesSlice.reducer;
+export const { setNameFilter } = technologiesSlice.actions;

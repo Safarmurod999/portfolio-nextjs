@@ -5,8 +5,8 @@ export interface Projects {
   link: string;
   image: string;
   category_id: number;
-  technologies: number[];
-  active: boolean;
+  technologies: number[] | string[];
+  active?: boolean;
 }
 
 export interface ProjectsFilter {
@@ -32,7 +32,7 @@ export interface UpdateProjectDataPayload {
     link?: string;
     image?: string;
     category_id?: number;
-    technologies?: number[];
+    technologies?: number[] | string[];
     active?: boolean;
   };
 }

@@ -5,6 +5,7 @@ import { Users } from "./entities/Users";
 import { Categories } from "./entities/Categories";
 import { Leads } from "./entities/Leads";
 import { Education } from "./entities/Education";
+import { Technologies } from "./entities/Technologies";
 import "dotenv/config";
 
 export const AppDataSource = new DataSource({
@@ -16,7 +17,7 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: process.env.NODE_ENV !== "production",
   logging: false,
-  entities: [Projects,Users,Categories,Leads,Education],
+  entities: [Projects, Users, Categories, Leads, Education, Technologies],
   extra: {
     ssl: {
       rejectUnauthorized: false,

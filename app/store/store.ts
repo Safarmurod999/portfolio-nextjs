@@ -5,6 +5,7 @@ import {
   leadsSlice,
   projectsSlice,
   stateSlice,
+  technologiesSlice,
   userSlice,
 } from "./slices";
 export const store = configureStore({
@@ -15,6 +16,7 @@ export const store = configureStore({
     leads: leadsSlice,
     education: educationSlice,
     projects: projectsSlice,
+    technologies: technologiesSlice,
   },
 });
 

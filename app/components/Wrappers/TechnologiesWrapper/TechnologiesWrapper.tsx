@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import useConnect from "./connect";
 import Pagination from "@/app/components/Dashboard/Pagination/Pagination";
 import {
   Form,
@@ -8,34 +7,34 @@ import {
   FormControl,
   FormSwitch,
 } from "@/app/components/Dashboard/Form/Form";
+import { MdDeleteOutline } from "react-icons/md";
 import Link from "next/link";
 import { IoAddSharp } from "react-icons/io5";
-import { MdDeleteOutline } from "react-icons/md";
 import { CiEdit } from "react-icons/ci";
-import { Projects } from "@/app/types/store/projects";
+import useConnect from "./connect";
+import { Technology } from "@/app/types/store/technologies";
 
-const ProjectsWrapper = () => {
+const TechnologiesWrapper = () => {
   const {
-    projects,
+    technologies,
     isLoading,
     handleDelete,
     handleSearch,
-    title,
+    name,
     handleSubmit,
     handleUpdate,
     handleFilterReset,
   } = useConnect();
-
   return (
     <div className="data-table-container">
       <div className="flex justify-between items-stretch">
         <Form width="[300px]" onSubmit={handleSubmit}>
           <FormControl
             type="text"
-            placeholder="Project Title"
-            value={title || ""}
+            placeholder="Name"
+            value={name}
+            name="name"
             onChange={handleSearch}
-            name="title"
           />
           <FormBtn text="Search" />
           <button onClick={handleFilterReset} className="form-button">
@@ -44,7 +43,7 @@ const ProjectsWrapper = () => {
         </Form>
         <div className="flex">
           <Link
-            href={"/dashboard/projects/create"}
+            href={"/dashboard/technologies/create"}
             className="form-button flex items-center text-white"
           >
             <IoAddSharp />
@@ -58,9 +57,9 @@ const ProjectsWrapper = () => {
           <thead>
             <tr>
               <th>№</th>
-              <th>Title</th>
+              <th>Name</th>
+              <th>Icon</th>
               <th>Category</th>
-              <th>Technologies</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -68,36 +67,35 @@ const ProjectsWrapper = () => {
           <tbody>
             {isLoading ? (
               <tr>
-                <td colSpan={8}>
+                <td colSpan={6}>
                   <p className="text-center"> Loading...</p>
                 </td>
               </tr>
-            ) : projects ? (
-              projects.map((project: Projects) => (
-                <tr key={project.id}>
-                  <td>{project.id}</td>
-                  <td>{project.title}</td>
-                  <td>{project.category_id}</td>
-                  <td>{project.technologies}</td>
+            ) : technologies ? (
+              technologies.map((technologies: Technology) => (
+                <tr key={technologies.id}>
+                  <td>{technologies.id}</td>
+                  <td>{technologies.name}</td>
+                  <td><i className={technologies.icon}></i></td>
+                  <td>{technologies.category_id}</td>
                   <td>
-                    {" "}
                     <FormSwitch
                       onChange={(e) =>
-                        handleUpdate(e, project.id, !project.active)
+                        handleUpdate(e, technologies.id, !technologies.active)
                       }
-                      value={project.active}
+                      value={technologies.active}
                     />
                   </td>
                   <td>
                     <div className="flex justify-start items-center gap-2">
                       <Link
-                        href={`/dashboard/projects/edit/${project.id}`}
+                        href={`/dashboard/technologies/edit/${technologies.id}`}
                         className="action-btn"
                       >
                         <CiEdit />
                       </Link>
                       <button
-                        onClick={() => handleDelete(project.id)}
+                        onClick={() => handleDelete(technologies.id)}
                         className="action-btn"
                       >
                         <MdDeleteOutline />
@@ -108,7 +106,7 @@ const ProjectsWrapper = () => {
               ))
             ) : (
               <tr>
-                <td colSpan={8}>
+                <td colSpan={6}>
                   <p className="text-center">No data found</p>
                 </td>
               </tr>
@@ -121,4 +119,4 @@ const ProjectsWrapper = () => {
   );
 };
 
-export default ProjectsWrapper;
+export default TechnologiesWrapper;

@@ -4,3 +4,4 @@ export { default as categoriesSlice } from "./categoriesSlice";
 export { default as leadsSlice } from "./leadsSlice";
 export { default as educationSlice } from "./educationSlice";
 export { default as projectsSlice } from "./projectsSlice";
+export { default as technologiesSlice } from "./technologiesSlice";

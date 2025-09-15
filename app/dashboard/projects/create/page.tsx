@@ -12,11 +12,19 @@ import { IoAddSharp } from "react-icons/io5";
 import useConnect from "./connect";
 
 const Page = () => {
-  const { handleSubmit, handleChange, setFieldValue, values } = useConnect();
+  const {
+    handleSubmit,
+    handleChange,
+    setFieldValue,
+    values,
+    categoryList,
+    technologyList,
+    handleImage
+  } = useConnect();
   return (
-    <section className="education-create h-[100svh]">
+    <section className="project-create h-[100svh]">
       <div className="admin-container">
-        <Breadcrumb title="Education Create" backlink="/dashboard/education" />
+        <Breadcrumb title="Project Create" backlink="/dashboard/projects" />
         <Form direction="y" width="50" onSubmit={handleSubmit}>
           <div className="flex w-full gap-[10px]">
             <FormControl
@@ -56,11 +64,7 @@ const Page = () => {
               label={"Category"}
               onChange={handleChange}
               value={values.category_id.toString()}
-              options={[
-                { label: "Web Development", value: "1" },
-                { label: "Mobile Development", value: "2" },
-                { label: "Data Science", value: "3" },
-              ]}
+              options={categoryList ? categoryList : []}
               name="category_id"
               required={true}
               width="full"
@@ -70,19 +74,17 @@ const Page = () => {
             <FormMultiSelect
               placeholder="Select Technologies"
               label={"Technologies"}
-              onChange={setFieldValue.bind(null, "technologies")}
-              value={values.technologies}
-              options={[
-                { label: "JavaScript", value: 1 },
-                { label: "TypeScript", value: 2 },
-                { label: "React", value: 3 },
-              ]}
+              onChange={(val) => setFieldValue("technologies", val)}
+              value={values.technologies ? values.technologies : []}
+              options={
+                technologyList ? technologyList : [{ label: "", value: "" }]
+              }
               width="full"
             />
 
             <FormImage
               label={"Image"}
-              onChange={handleChange}
+              onChange={handleImage}
               width="full"
               name="image"
             />

@@ -44,12 +44,12 @@ declare global {
     name?: string;
   }
   interface SelectProps {
-    value: string;
+    value: string | number;
     onChange: (e: React.ChangeEvent<HTMLSelectElement>) => void;
     placeholder: string;
     label: string | null;
     required: boolean;
-    options: any;
+    options: any[];
     width?: string;
     disabled?: boolean;
     name?: string;

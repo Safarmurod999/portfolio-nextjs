@@ -2,13 +2,13 @@ import { useCallback, useEffect, useState } from "react";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch } from "@/app/store/store";
-import { selectProjects } from "@/app/store/selectors/projects";
+import { selectTechnologies } from "@/app/store/selectors/technologies";
 import {
-  deleteProjectData,
-  fetchProjectData,
-  setTitleFilter,
-  updateProjectData,
-} from "@/app/store/slices/projectsSlice";
+  deleteTechnologyData,
+  fetchTechnologyData,
+  setNameFilter,
+  updateTechnologyData,
+} from "@/app/store/slices/technologiesSlice";
 import { toast } from "sonner";
 
 const useConnect = () => {
@@ -16,19 +16,20 @@ const useConnect = () => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const [title, setTitle] = useState(searchParams.get("title") || "");
+  const [name, setName] = useState(searchParams.get("name") || "");
 
-  const { data, isLoading, error, filter } = useSelector(selectProjects);
-
+  const { data, isLoading, error, filter } = useSelector(selectTechnologies);
+  console.log(data);
+   
   const handleDelete = (id: number) => {
-    dispatch(deleteProjectData(id)).then((res) => {
-      if (res.type === "data/deleteProjectData/fulfilled") {
-        toast.success("Project deleted successfully", {
+    dispatch(deleteTechnologyData(id)).then((res) => {
+      if (res.type === "data/deleteTechnologyData/fulfilled") {
+        toast.success("Technology deleted successfully", {
           position: "bottom-right",
           duration: 2000,
         });
-      } else if (res.type === "data/deleteProjectData/rejected") {
-        toast.error("Error deleting project", {
+      } else if (res.type === "data/deleteTechnologyData/rejected") {
+        toast.error("Error deleting technology", {
           position: "bottom-right",
           duration: 2000,
         });
@@ -37,33 +38,33 @@ const useConnect = () => {
   };
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    setName(e.target.value);
   };
 
   const createQueryString = useCallback(
-    (title: string, value: string) => {
+    (name: string, value: string) => {
       const newParams = new URLSearchParams(searchParams);
-      newParams.set(title, value);
+      newParams.set(name, value);
       return newParams.toString();
     },
     [searchParams]
   );
   useEffect(() => {
-    if (!title.trim()) {
+    if (!name.trim()) {
       router.push(pathname);
     }
-  }, [title, router, pathname]);
+  }, [name, router, pathname]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (title.trim()) {
-      router.push(pathname + "?" + createQueryString("title", title));
+    if (name.trim()) {
+      router.push(pathname + "?" + createQueryString("name", name));
     }
-    dispatch(setTitleFilter(title));
+    dispatch(setNameFilter(name));
   };
 
   const handleFilterReset = () => {
-    setTitle("");
+    setName("");
     router.push(pathname);
   };
   const handleUpdate = (
@@ -72,22 +73,19 @@ const useConnect = () => {
     active: boolean
   ) => {
     e.preventDefault();
-    const formData = new FormData();
-    formData.append("active", active.toString());
-    formData.append("id", id.toString());
     dispatch(
-      updateProjectData({
-        params: formData,
+      updateTechnologyData({
+        params: { active },
         id: +id,
       })
     ).then((res) => {
-      if (res.type === "data/updateProjectData/fulfilled") {
-        toast.success("Project updated successfully", {
+      if (res.type === "data/updateTechnologyData/fulfilled") {
+        toast.success("Technology updated successfully", {
           position: "bottom-right",
           duration: 2000,
         });
-      } else if (res.type === "data/updateProjectData/rejected") {
-        toast.error("Error updating project", {
+      } else if (res.type === "data/updateTechnologyData/rejected") {
+        toast.error("Error updating technology", {
           position: "bottom-right",
           duration: 2000,
         });
@@ -95,23 +93,24 @@ const useConnect = () => {
     });
   };
 
+
   if (error) {
     console.log(error);
   }
 
   useEffect(() => {
-    dispatch(fetchProjectData(filter.title ? filter : {}));
+    dispatch(fetchTechnologyData(filter.name ? filter : {}));
   }, [dispatch, filter]);
 
   return {
-    projects: data,
+    technologies: data,
     isLoading,
     handleDelete,
     handleSearch,
-    title,
+    name,
     handleSubmit,
     handleUpdate,
-    handleFilterReset,
+    handleFilterReset
   };
 };
 
