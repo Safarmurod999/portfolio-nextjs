@@ -1,8 +1,8 @@
-// app/api/technologies/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { AppDataSource } from "@/app/lib/datasource";
 import { Technologies } from "@/app/lib/entities/Technologies";
 import { ILike } from "typeorm";
+import { withCors } from "@/app/lib/cors";
 
 export async function GET(req: NextRequest) {
   try {
@@ -24,12 +24,11 @@ export async function GET(req: NextRequest) {
       });
     }
     const data = await technologyRepository.find({ where });
-    return NextResponse.json(data);
+    return withCors(NextResponse.json(data));
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to fetch data" }, { status: 500 })
     );
   }
 }
@@ -42,9 +41,8 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
 
     if (!data.name || !data.icon || !data.category_id) {
-      return NextResponse.json(
-        { error: "Fields are required" },
-        { status: 400 }
+      return withCors(
+        NextResponse.json({ error: "Fields are required" }, { status: 400 })
       );
     }
 
@@ -58,12 +56,14 @@ export async function POST(request: NextRequest) {
     });
     await technologyRepository.save(technology);
 
-    return NextResponse.json(technology, { status: 201 });
+    return withCors(NextResponse.json(technology, { status: 201 }));
   } catch (error) {
     console.error("Error creating technology:", error);
-    return NextResponse.json(
-      { error: "Failed to create technology" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json(
+        { error: "Failed to create technology" },
+        { status: 500 }
+      )
     );
   }
 }

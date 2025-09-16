@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from "next/server";
 import { Users } from "@/app/lib/entities/Users";
 import { ILike } from "typeorm";
 import { AppDataSource } from "@/app/lib/datasource";
+import { withCors } from "@/app/lib/cors";
 
 export async function GET(req: NextRequest) {
   try {
@@ -20,24 +21,20 @@ export async function GET(req: NextRequest) {
           where[key] = ILike(`%${queryParams[key]}%`);
         }
       });
-    }    
-    const users = await usersRepository.find({where: where});
+    }
+    const users = await usersRepository.find({ where: where });
 
     if (!users || users.length === 0) {
-      return NextResponse.json({ error: "No users found" }, { status: 404 });
+      return withCors(
+        NextResponse.json({ error: "No users found" }, { status: 404 })
+      );
     }
 
-    const headers = new Headers();
-    headers.set("Access-Control-Allow-Origin", "*"); 
-    headers.set("Access-Control-Allow-Methods", "GET, POST, OPTIONS");
-    headers.set("Access-Control-Allow-Headers", "*");
-
-    return NextResponse.json(users, { headers });
+    return withCors(NextResponse.json(users));
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to fetch data" }, { status: 500 })
     );
   }
 }
@@ -47,11 +44,10 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
     if (!AppDataSource.isInitialized) {
       await AppDataSource.initialize();
-    }    
+    }
     if (!data.username || !data.password) {
-      return NextResponse.json(
-        { error: "Fields are required" },
-        { status: 400 }
+      return withCors(
+        NextResponse.json({ error: "Fields are required" }, { status: 400 })
       );
     }
 
@@ -64,12 +60,11 @@ export async function POST(request: NextRequest) {
     });
     await userRepository.save(user);
 
-    return NextResponse.json(user, { status: 201 });
+    return withCors(NextResponse.json(user, { status: 201 }));
   } catch (error) {
     console.error("Error creating user:", error);
-    return NextResponse.json(
-      { error: "Failed to create user" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to create user" }, { status: 500 })
     );
   }
 }

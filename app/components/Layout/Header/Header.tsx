@@ -61,8 +61,8 @@ const Header = () => {
                 <i className="fa-solid fa-caret-down"></i>
                 <Dropdown
                   array={[
-                    { name: "All Services", link: "/services" },
-                    { name: "Service Details", link: "/services/details" },
+                    { name: "All Services", link: "/my-services" },
+                    { name: "Service Details", link: "/my-services/details" },
                   ]}
                   open={open.first}
                 />

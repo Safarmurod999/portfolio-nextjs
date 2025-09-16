@@ -2,6 +2,7 @@ import { Users } from "@/app/lib/entities/Users";
 import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
 import { AppDataSource } from "@/app/lib/datasource";
+import { withCors } from "@/app/lib/cors";
 
 const SECRET_KEY = process.env.JWT_SECRET || "safarmurod";
 
@@ -10,9 +11,11 @@ export async function POST(req: Request) {
     const { username, password } = await req.json();
 
     if (!username || !password) {
-      return NextResponse.json(
-        { error: "Username and password are required" },
-        { status: 400 }
+      return withCors(
+        NextResponse.json(
+          { error: "Username and password are required" },
+          { status: 400 }
+        )
       );
     }
     if (!AppDataSource.isInitialized) {
@@ -23,9 +26,11 @@ export async function POST(req: Request) {
     const user = await usersRepository.findOne({ where: { username } });
 
     if (!user) {
-      return NextResponse.json(
-        { error: "Invalid username or password" },
-        { status: 401 }
+      return withCors(
+        NextResponse.json(
+          { error: "Invalid username or password" },
+          { status: 401 }
+        )
       );
     }
 
@@ -43,18 +48,19 @@ export async function POST(req: Request) {
         path: "/",
         maxAge: 72000,
       });
-      return response;
+      return withCors(response);
     }
 
-    return NextResponse.json(
-      { error: "Invalid username or password" },
-      { status: 401 }
+    return withCors(
+      NextResponse.json(
+        { error: "Invalid username or password" },
+        { status: 401 }
+      )
     );
   } catch (error) {
     console.error("Login error:", error);
-    return NextResponse.json(
-      { error: "Internal Server Error" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Internal Server Error" }, { status: 500 })
     );
   }
 }

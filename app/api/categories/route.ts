@@ -1,8 +1,8 @@
-// app/api/users/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { AppDataSource } from "@/app/lib/datasource";
 import { Categories } from "@/app/lib/entities/Categories";
 import { ILike } from "typeorm";
+import { withCors } from "@/app/lib/cors";
 
 export async function GET(req: NextRequest) {
   try {
@@ -26,12 +26,11 @@ export async function GET(req: NextRequest) {
     const categories = await categoryRepository.find({
       where,
     });
-    return NextResponse.json(categories);
+    return withCors(NextResponse.json(categories));
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to fetch data" }, { status: 500 })
     );
   }
 }
@@ -44,9 +43,8 @@ export async function POST(request: NextRequest) {
     const data = await request.json();
 
     if (!data.name) {
-      return NextResponse.json(
-        { error: "Fields are required" },
-        { status: 400 }
+      return withCors(
+        NextResponse.json({ error: "Fields are required" }, { status: 400 })
       );
     }
 
@@ -58,12 +56,11 @@ export async function POST(request: NextRequest) {
     });
     await categoryRepository.save(category);
 
-    return NextResponse.json(category, { status: 201 });
+    return withCors(NextResponse.json(category, { status: 201 }));
   } catch (error) {
     console.error("Error creating user:", error);
-    return NextResponse.json(
-      { error: "Failed to create user" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to create user" }, { status: 500 })
     );
   }
 }

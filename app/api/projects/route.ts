@@ -1,8 +1,8 @@
-// app/api/users/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { Projects } from "../../lib/entities/Projects";
 import { AppDataSource } from "@/app/lib/datasource";
 import { ILike } from "typeorm";
+import { withCors } from "@/app/lib/cors";
 
 export async function GET(req: NextRequest) {
   try {
@@ -22,15 +22,15 @@ export async function GET(req: NextRequest) {
       });
     }
     const projects = await projectsRepository.find({ where });
-    return NextResponse.json(projects);
+    return withCors(NextResponse.json(projects));
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to fetch data" }, { status: 500 })
     );
   }
 }
+
 export async function POST(request: NextRequest) {
   try {
     if (!AppDataSource.isInitialized) {
@@ -54,9 +54,8 @@ export async function POST(request: NextRequest) {
       !technologies ||
       !image
     ) {
-      return NextResponse.json(
-        { error: "All fields are required" },
-        { status: 400 }
+      return withCors(
+        NextResponse.json({ error: "All fields are required" }, { status: 400 })
       );
     }
 
@@ -84,12 +83,11 @@ export async function POST(request: NextRequest) {
 
     await projectRepository.save(project);
 
-    return NextResponse.json(project, { status: 201 });
+    return withCors(NextResponse.json(project, { status: 201 }));
   } catch (error) {
     console.error("Error creating project:", error);
-    return NextResponse.json(
-      { error: "Failed to create project" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to create project" }, { status: 500 })
     );
   }
 }

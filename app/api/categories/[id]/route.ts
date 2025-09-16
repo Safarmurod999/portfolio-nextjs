@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Categories } from "@/app/lib/entities/Categories";
 import { AppDataSource } from "@/app/lib/datasource";
+import { withCors } from "@/app/lib/cors";
 
 export async function GET(
   req: Request,
@@ -12,7 +13,7 @@ export async function GET(
     }
     const { id } = params;
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+      return withCors(NextResponse.json({ error: "ID is required" }, { status: 400 }));
     }
 
     const categoryRepository = AppDataSource.getRepository(Categories);
@@ -22,21 +23,26 @@ export async function GET(
     });
 
     if (!category) {
-      return NextResponse.json(
-        { error: "Category not found" },
-        { status: 404 }
+      return withCors(
+        NextResponse.json(
+          { error: "Category not found" },
+          { status: 404 }
+        )
       );
     }
 
-    return NextResponse.json(category);
+    return withCors(NextResponse.json(category));
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json(
+        { error: "Failed to fetch data" },
+        { status: 500 }
+      )
     );
   }
 }
+
 export async function DELETE(
   req: Request,
   { params }: { params: { id: number } }
@@ -51,18 +57,22 @@ export async function DELETE(
     const categoryRepository = AppDataSource.getRepository(Categories);
     const category = await categoryRepository.findOne({ where: { id } });
     if (!category) {
-      return NextResponse.json(
-        { error: "category not found" },
-        { status: 404 }
+      return withCors(
+        NextResponse.json(
+          { error: "category not found" },
+          { status: 404 }
+        )
       );
     }
     await categoryRepository.delete(id);
-    return NextResponse.json({ message: "category deleted" });
+    return withCors(NextResponse.json({ message: "category deleted" }));
   } catch (error) {
     console.error("Error deleting category:", error);
-    return NextResponse.json(
-      { error: "Failed to delete category" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json(
+        { error: "Failed to delete category" },
+        { status: 500 }
+      )
     );
   }
 }
@@ -81,21 +91,25 @@ export async function PUT(
     const categoryRepository = AppDataSource.getRepository(Categories);
     const category = await categoryRepository.findOne({ where: { id } });
     if (!category) {
-      return NextResponse.json(
-        { error: "Category not found" },
-        { status: 404 }
+      return withCors(
+        NextResponse.json(
+          { error: "Category not found" },
+          { status: 404 }
+        )
       );
     }
 
-    (category.name = data.name || category.name),
-      (category.active = data.active ?? category.active);
+    category.name = data.name || category.name;
+    category.active = data.active ?? category.active;
     await categoryRepository.save(category);
-    return NextResponse.json(category);
+    return withCors(NextResponse.json(category));
   } catch (error) {
     console.error("Error updating category:", error);
-    return NextResponse.json(
-      { error: "Failed to update category" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json(
+        { error: "Failed to update category" },
+        { status: 500 }
+      )
     );
   }
 }

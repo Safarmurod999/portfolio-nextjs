@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { Education } from "@/app/lib/entities/Education";
 import { AppDataSource } from "@/app/lib/datasource";
+import { withCors } from "@/app/lib/cors";
 
 export async function GET(
   req: Request,
@@ -12,7 +13,9 @@ export async function GET(
     }
     const { id } = params;
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+      return withCors(
+        NextResponse.json({ error: "ID is required" }, { status: 400 })
+      );
     }
 
     const educationRepository = AppDataSource.getRepository(Education);
@@ -22,21 +25,20 @@ export async function GET(
     });
 
     if (!education) {
-      return NextResponse.json(
-        { error: "Education not found" },
-        { status: 404 }
+      return withCors(
+        NextResponse.json({ error: "Education not found" }, { status: 404 })
       );
     }
 
-    return NextResponse.json(education);
+    return withCors(NextResponse.json(education));
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to fetch data" }, { status: 500 })
     );
   }
 }
+
 export async function DELETE(
   req: Request,
   { params }: { params: { id: number } }
@@ -51,18 +53,19 @@ export async function DELETE(
     const educationRepository = AppDataSource.getRepository(Education);
     const education = await educationRepository.findOne({ where: { id } });
     if (!education) {
-      return NextResponse.json(
-        { error: "Education not found" },
-        { status: 404 }
+      return withCors(
+        NextResponse.json({ error: "Education not found" }, { status: 404 })
       );
     }
     await educationRepository.delete(id);
-    return NextResponse.json({ message: "Education deleted" });
+    return withCors(NextResponse.json({ message: "Education deleted" }));
   } catch (error) {
     console.error("Error deleting education:", error);
-    return NextResponse.json(
-      { error: "Failed to delete education" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json(
+        { error: "Failed to delete education" },
+        { status: 500 }
+      )
     );
   }
 }
@@ -81,22 +84,23 @@ export async function PUT(
     const educationRepository = AppDataSource.getRepository(Education);
     const education = await educationRepository.findOne({ where: { id } });
     if (!education) {
-      return NextResponse.json(
-        { error: "education not found" },
-        { status: 404 }
+      return withCors(
+        NextResponse.json({ error: "education not found" }, { status: 404 })
       );
     }
 
-    (education.name = data.name || education.name),
-      (education.place = data.place || education.place),
-      (education.active = data.active ?? education.active);
+    education.name = data.name || education.name;
+    education.place = data.place || education.place;
+    education.active = data.active ?? education.active;
     await educationRepository.save(education);
-    return NextResponse.json(education);
+    return withCors(NextResponse.json(education));
   } catch (error) {
     console.error("Error updating education:", error);
-    return NextResponse.json(
-      { error: "Failed to update education" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json(
+        { error: "Failed to update education" },
+        { status: 500 }
+      )
     );
   }
 }

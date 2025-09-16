@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { Projects } from "@/app/lib/entities/Projects";
 import { AppDataSource } from "@/app/lib/datasource";
+import { withCors } from "@/app/lib/cors";
 
 export async function GET(
   req: Request,
@@ -12,7 +13,9 @@ export async function GET(
     }
     const { id } = params;
     if (!id) {
-      return NextResponse.json({ error: "ID is required" }, { status: 400 });
+      return withCors(
+        NextResponse.json({ error: "ID is required" }, { status: 400 })
+      );
     }
 
     const projectRepository = AppDataSource.getRepository(Projects);
@@ -22,15 +25,16 @@ export async function GET(
     });
 
     if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      return withCors(
+        NextResponse.json({ error: "Project not found" }, { status: 404 })
+      );
     }
 
-    return NextResponse.json(project);
+    return withCors(NextResponse.json(project));
   } catch (error) {
     console.error("Database error:", error);
-    return NextResponse.json(
-      { error: "Failed to fetch data" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to fetch data" }, { status: 500 })
     );
   }
 }
@@ -49,15 +53,16 @@ export async function DELETE(
     const projectRepository = AppDataSource.getRepository(Projects);
     const project = await projectRepository.findOne({ where: { id } });
     if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      return withCors(
+        NextResponse.json({ error: "Project not found" }, { status: 404 })
+      );
     }
     await projectRepository.delete(id);
-    return NextResponse.json({ message: "Project deleted" });
+    return withCors(NextResponse.json({ message: "Project deleted" }));
   } catch (error) {
     console.error("Error deleting project:", error);
-    return NextResponse.json(
-      { error: "Failed to delete project" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to delete project" }, { status: 500 })
     );
   }
 }
@@ -80,9 +85,8 @@ export async function PUT(request: NextRequest) {
     const active = formData.get("active") as string | null;
 
     if (!id) {
-      return NextResponse.json(
-        { error: "Project ID is required" },
-        { status: 400 }
+      return withCors(
+        NextResponse.json({ error: "Project ID is required" }, { status: 400 })
       );
     }
 
@@ -90,7 +94,9 @@ export async function PUT(request: NextRequest) {
     const project = await projectRepository.findOneBy({ id: parseInt(id) });
 
     if (!project) {
-      return NextResponse.json({ error: "Project not found" }, { status: 404 });
+      return withCors(
+        NextResponse.json({ error: "Project not found" }, { status: 404 })
+      );
     }
 
     project.title = title || project.title;
@@ -118,12 +124,11 @@ export async function PUT(request: NextRequest) {
 
     await projectRepository.save(project);
 
-    return NextResponse.json(project, { status: 200 });
+    return withCors(NextResponse.json(project, { status: 200 }));
   } catch (error) {
     console.error("Error updating project:", error);
-    return NextResponse.json(
-      { error: "Failed to update project" },
-      { status: 500 }
+    return withCors(
+      NextResponse.json({ error: "Failed to update project" }, { status: 500 })
     );
   }
 }
