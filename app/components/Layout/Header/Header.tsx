@@ -83,17 +83,17 @@ const Header = () => {
                   <Dropdown array={['All Portfolio', 'Portfolio Details']} open={open.second} /> */}
                 </a>
               </li>
-              <li
+              {/* <li
                 className="navbar__list--item"
                 onMouseEnter={() => setOpen({ ...open, third: true })}
                 onMouseLeave={() => setOpen({ ...open, third: false })}
               >
                 <a aria-label="blog" href={"/#blog"}>
                   Blog
-                  {/* <i className="fa-solid fa-caret-down"></i>
-                      <Dropdown array={['Blog Standard', 'All Blogs', 'Blog Details']} open={open.third} /> */}
+                  <i className="fa-solid fa-caret-down"></i>
+                      <Dropdown array={['Blog Standard', 'All Blogs', 'Blog Details']} open={open.third} />
                 </a>
-              </li>
+              </li> */}
             </ul>
             <div className="navbar__right">
               <ThemeSwitcher />
