@@ -5,6 +5,8 @@ import {
   experienceSlice,
   leadsSlice,
   projectsSlice,
+  serviceDetailsSlice,
+  servicesSlice,
   stateSlice,
   technologiesSlice,
   userSlice,
@@ -19,6 +21,8 @@ export const store = configureStore({
     projects: projectsSlice,
     technologies: technologiesSlice,
     experience: experienceSlice,
+    services: servicesSlice,
+    serviceDetails: serviceDetailsSlice,
   },
 });
 

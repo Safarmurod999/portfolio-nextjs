@@ -6,8 +6,10 @@ import { Categories } from "./entities/Categories";
 import { Leads } from "./entities/Leads";
 import { Education } from "./entities/Education";
 import { Technologies } from "./entities/Technologies";
-import "dotenv/config";
 import { Experience } from "./entities/Experience";
+import { Services } from "./entities/Services";
+import { ServiceDetails } from "./entities/Details";
+import "dotenv/config";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -26,6 +28,8 @@ export const AppDataSource = new DataSource({
     Education,
     Technologies,
     Experience,
+    Services,
+    ServiceDetails,
   ],
   extra: {
     ssl: {

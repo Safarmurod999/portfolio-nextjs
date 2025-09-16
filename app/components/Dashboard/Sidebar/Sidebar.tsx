@@ -2,20 +2,17 @@
 import React, { useEffect, useState } from "react";
 import { IoCloseSharp, IoPersonOutline } from "react-icons/io5";
 import { TbMessage2Dollar } from "react-icons/tb";
-import {
-  FaProjectDiagram,
-  FaRegLightbulb,
-  FaUniversity,
-} from "react-icons/fa";
+import { FaProjectDiagram, FaRegLightbulb, FaUniversity } from "react-icons/fa";
 import { VscServerProcess } from "react-icons/vsc";
 
-import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { IoIosStats } from "react-icons/io";
 import { BiCategory } from "react-icons/bi";
 import { useDispatch } from "react-redux";
 import { AppDispatch } from "@/app/store/store";
 import { handleSidebar } from "@/app/store/slices/stateSlice";
+import path from "path";
 
 const adminRoutes = [
   {
@@ -64,6 +61,18 @@ const adminRoutes = [
     id: 8,
     name: "Experience",
     path: "/dashboard/experience",
+    icon: <VscServerProcess />,
+  },
+  {
+    id: 9,
+    name: "Services",
+    path: "/dashboard/services",
+    icon: <VscServerProcess />,
+  },
+  {
+    id: 10,
+    name: "Service Details",
+    path: "/dashboard/service-details",
     icon: <VscServerProcess />,
   },
 ];

@@ -1,0 +1,1 @@
+export const selectServices = (state: any) => state.services;
