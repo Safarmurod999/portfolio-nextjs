@@ -2,6 +2,7 @@ import { configureStore } from "@reduxjs/toolkit";
 import {
   categoriesSlice,
   educationSlice,
+  experienceSlice,
   leadsSlice,
   projectsSlice,
   stateSlice,
@@ -17,6 +18,7 @@ export const store = configureStore({
     education: educationSlice,
     projects: projectsSlice,
     technologies: technologiesSlice,
+    experience: experienceSlice,
   },
 });
 

@@ -7,6 +7,7 @@ import { Leads } from "./entities/Leads";
 import { Education } from "./entities/Education";
 import { Technologies } from "./entities/Technologies";
 import "dotenv/config";
+import { Experience } from "./entities/Experience";
 
 export const AppDataSource = new DataSource({
   type: "postgres",
@@ -17,7 +18,15 @@ export const AppDataSource = new DataSource({
   database: process.env.DB_NAME,
   synchronize: process.env.NODE_ENV !== "production",
   logging: false,
-  entities: [Projects, Users, Categories, Leads, Education, Technologies],
+  entities: [
+    Projects,
+    Users,
+    Categories,
+    Leads,
+    Education,
+    Technologies,
+    Experience,
+  ],
   extra: {
     ssl: {
       rejectUnauthorized: false,

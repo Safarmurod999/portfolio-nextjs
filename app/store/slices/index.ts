@@ -5,3 +5,4 @@ export { default as leadsSlice } from "./leadsSlice";
 export { default as educationSlice } from "./educationSlice";
 export { default as projectsSlice } from "./projectsSlice";
 export { default as technologiesSlice } from "./technologiesSlice";
+export { default as experienceSlice } from "./experienceSlice";

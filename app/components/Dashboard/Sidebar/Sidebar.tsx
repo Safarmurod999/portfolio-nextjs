@@ -2,7 +2,12 @@
 import React, { useEffect, useState } from "react";
 import { IoCloseSharp, IoPersonOutline } from "react-icons/io5";
 import { TbMessage2Dollar } from "react-icons/tb";
-import { FaLightbulb, FaProjectDiagram, FaRegLightbulb, FaUniversity } from "react-icons/fa";
+import {
+  FaProjectDiagram,
+  FaRegLightbulb,
+  FaUniversity,
+} from "react-icons/fa";
+import { VscServerProcess } from "react-icons/vsc";
 
 import { usePathname } from "next/navigation";
 import Link from "next/link";
@@ -54,6 +59,12 @@ const adminRoutes = [
     name: "Technologies",
     path: "/dashboard/technologies",
     icon: <FaRegLightbulb />,
+  },
+  {
+    id: 8,
+    name: "Experience",
+    path: "/dashboard/experience",
+    icon: <VscServerProcess />,
   },
 ];
 
