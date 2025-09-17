@@ -10,7 +10,7 @@ import consultation from "../assets/images/Projects/100yuristov.webp";
 import simply from "../assets/images/Projects/simply.webp";
 import matras from "../assets/images/Projects/matras.webp"
 
-export const BASE_URL = process.env.NODE_ENV !== "production" ? "http://localhost:3000/api" : "https://portfolio-nextjs-s.vercel.app/api"
+export const BASE_URL = process.env.NODE_ENV !== "production" ? "http://localhost:3000/api" : "https://www.safarmurod.uz/api"
 
 export const services = [
   {
