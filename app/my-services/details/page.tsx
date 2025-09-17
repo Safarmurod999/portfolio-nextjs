@@ -1,12 +1,19 @@
-"use client"
+"use client";
 import React, { useState } from "react";
 import Link from "next/link";
-import { services } from "../../const/data";
 import { GoArrowUpRight } from "react-icons/go";
 import { Title } from "../../components";
+import useConnect from "./connect";
 
 const Page = () => {
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(4);
+  const { services, servicesLoading, serviceDetails, serviceDetailsLoading } =
+    useConnect();
+  console.log(active);
+
+  if (serviceDetails) {
+    console.log(serviceDetails.filter((item) => item.service.id == active));
+  }
 
   return (
     <>
@@ -23,82 +30,47 @@ const Page = () => {
           <div className="service__links">
             <div className="service__links--title">Service List</div>
             <ul className="service__list">
-              {services.map((service) => (
-                <li
-                  key={service.id}
-                  className={`service__list--item ${
-                    service.id == active && "active"
-                  }`}
-                  onClick={() => setActive(service.id)}
-                >
-                  {service.description}
-                </li>
-              ))}
+              {!servicesLoading &&
+                services &&
+                services.map((service) => (
+                  <li
+                    key={service.id}
+                    className={`service__list--item ${
+                      service.id == active && "active"
+                    }`}
+                    onClick={() => setActive(service.id)}
+                  >
+                    {service.name}
+                  </li>
+                ))}
             </ul>
           </div>
-          <div className={`service__tab ${active == 0 && "active"}`}>
+          <div className={`service__tab active`}>
             <Title>Website Development</Title>
             <ul className="service__tab--list">
-              <li className="service__tab--item">
-                <div>
-                  <h4>01/</h4>
-                  <div className="service__tab--item-content">
-                    <span>E-commerce website</span>
-                  </div>
-                </div>
-                <a
-                  aria-label="page-link"
-                  href={"https://nisa-ui-kit.netlify.app"}
-                  className="service__tab--item-icon"
-                >
-                  <GoArrowUpRight />
-                </a>
-              </li>
-              <li className="service__tab--item">
-                <div>
-                  <h4>02/</h4>
-                  <div className="service__tab--item-content">
-                    <span>Landing page</span>
-                  </div>
-                </div>
-                <a
-                  aria-label="page-link"
-                  href={"https://nisa-ui-kit.netlify.app"}
-                  className="service__tab--item-icon"
-                >
-                  <GoArrowUpRight />
-                </a>
-              </li>
-              <li className="service__tab--item">
-                <div>
-                  <h4>03/</h4>
-                  <div className="service__tab--item-content">
-                    <span>Portfolio website</span>
-                  </div>
-                </div>
-                <a
-                  aria-label="page-link"
-                  href={"https://www.safarmurod.uz/"}
-                  className="service__tab--item-icon"
-                >
-                  <GoArrowUpRight />
-                </a>
-              </li>
-              <li className="service__tab--item">
-                <div>
-                  <h4>04/</h4>
-                  <div className="service__tab--item-content">
-                    <span>Educational website</span>
-                  </div>
-                </div>
-                <a
-                  aria-label="page-link"
-                  href={"http://meelon.uz"}
-                  className="service__tab--item-icon"
-                >
-                  <GoArrowUpRight />
-                </a>
-              </li>
+              {!serviceDetailsLoading &&
+                serviceDetails &&
+                serviceDetails
+                  .filter((item) => item.service.id == active)
+                  .map((item, index) => {
+                    return (
+                      <li className="service__tab--item" key={item.id}>
+                        <div>
+                          <h4>{index + 1}/</h4>
+                          <div className="service__tab--item-content">
+                            <span>{item.name}</span>
+                          </div>
+                        </div>
+                        <a
+                          aria-label="page-link"
+                          href={"https://nisa-ui-kit.netlify.app"}
+                          className="service__tab--item-icon"
+                        >
+                          <GoArrowUpRight />
+                        </a>
+                      </li>
+                    );
+                  })}
             </ul>
           </div>
           <div className={`service__tab ${active == 1 && "active"}`}>

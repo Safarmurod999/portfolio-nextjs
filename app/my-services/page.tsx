@@ -1,7 +1,6 @@
 import { Metadata } from "next";
 import Link from "next/link";
 import { Footer, Header, ServiceWrapper, Title } from "../components";
-import { services } from "../const/data";
 
 export const metadata: Metadata = {
   title: "Safarmurod's Portfolio | Services",
@@ -22,7 +21,7 @@ const Services = () => {
       </section>
       <section className="service">
         <div className="container">
-          <ServiceWrapper array={services} />
+          <ServiceWrapper />
         </div>
       </section>
       <Footer />
