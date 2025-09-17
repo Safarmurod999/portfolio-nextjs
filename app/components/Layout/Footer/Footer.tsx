@@ -127,7 +127,6 @@ const Footer = () => {
               </a>
             </li>
             <li>
-              t
               <a
                 href="https://www.linkedin.com/in/safarmurod999/"
                 aria-label="Linkedin"

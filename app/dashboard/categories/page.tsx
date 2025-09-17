@@ -1,7 +1,7 @@
 "use client";
 
 import { Breadcrumb } from "@/app/components";
-import CategoriesWrapper from "@/app/components/Wrappers/CategoriesWrapper/CategoriesWrapper";
+import CategoriesWrapper from "@/app/components/Wrappers/dashboard/CategoriesWrapper/CategoriesWrapper";
 import { Suspense } from "react";
 
 const Page = () => {

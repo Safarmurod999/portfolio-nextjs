@@ -6,7 +6,7 @@ export interface Projects {
   image: string;
   category_id: number;
   technologies: number[] | string[];
-  active?: boolean;
+  active: boolean;
 }
 
 export interface ProjectsFilter {

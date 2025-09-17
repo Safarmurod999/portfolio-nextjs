@@ -1,25 +1,28 @@
 "use client";
 import React from "react";
-import Pagination from "../../Dashboard/Pagination/Pagination";
+import Link from "next/link";
 import {
   Form,
   FormBtn,
   FormControl,
   FormSwitch,
-} from "../../Dashboard/Form/Form";
+} from "@/app/components/Dashboard/Form/Form";
+import Pagination from "@/app/components/Dashboard/Pagination/Pagination";
+import { IoAddSharp } from "react-icons/io5";
 import { MdDeleteOutline } from "react-icons/md";
+import { CiEdit } from "react-icons/ci";
 import useConnect from "./connect";
 
-const LeadsWrapper = () => {
+const UserWrapper = () => {
   const {
-    leads,
+    users,
     isLoading,
-    fullname,
     handleDelete,
     handleSearch,
+    username,
     handleSubmit,
     handleUpdate,
-    handleFilterReset
+    handleFilterReset,
   } = useConnect();
 
   return (
@@ -28,9 +31,8 @@ const LeadsWrapper = () => {
         <Form width="[300px]" onSubmit={handleSubmit}>
           <FormControl
             type="text"
-            placeholder="Fullname"
-            value={fullname}
-            name="fullname"
+            placeholder="Username"
+            value={username}
             onChange={handleSearch}
           />
           <FormBtn text="Search" />
@@ -38,7 +40,15 @@ const LeadsWrapper = () => {
             Reset
           </button>
         </Form>
-        <div className="flex"></div>
+        <div className="flex">
+          <Link
+            href={"/dashboard/users/create"}
+            className="form-button flex items-center text-white"
+          >
+            <IoAddSharp />
+            <span>add</span>
+          </Link>
+        </div>
       </div>
 
       <div className="table-wrapper">
@@ -46,8 +56,8 @@ const LeadsWrapper = () => {
           <thead>
             <tr>
               <th>№</th>
-              <th>Fullname</th>
-              <th>Email</th>
+              <th>Username</th>
+              <th>Password</th>
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -59,22 +69,28 @@ const LeadsWrapper = () => {
                   <p className="text-center"> Loading...</p>
                 </td>
               </tr>
-            ) : leads ? (
-              leads.map((lead: Lead) => (
-                <tr key={lead.id}>
-                  <td>{lead.id}</td>
-                  <td>{lead.fullname}</td>
-                  <td>{lead.email}</td>
+            ) : users ? (
+              users.map((user: User) => (
+                <tr key={user.id}>
+                  <td>{user.id}</td>
+                  <td>{user.username}</td>
+                  <td>{user.password}</td>
                   <td>
                     <FormSwitch
-                      onChange={(e) => handleUpdate(e, lead.id, !lead.active)}
-                      value={lead.active}
+                      onChange={(e) => handleUpdate(e, user.id, !user.active)}
+                      value={user.active}
                     />
                   </td>
                   <td>
                     <div className="flex justify-start items-center gap-2">
+                      <Link
+                        href={`/dashboard/users/edit/${user.id}`}
+                        className="action-btn"
+                      >
+                        <CiEdit />
+                      </Link>
                       <button
-                        onClick={() => handleDelete(lead.id)}
+                        onClick={() => handleDelete(user.id)}
                         className="action-btn"
                       >
                         <MdDeleteOutline />
@@ -98,4 +114,4 @@ const LeadsWrapper = () => {
   );
 };
 
-export default LeadsWrapper;
+export default UserWrapper;

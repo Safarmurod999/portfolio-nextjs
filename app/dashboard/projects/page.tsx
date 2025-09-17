@@ -1,7 +1,7 @@
 "use client";
 
 import { Breadcrumb } from "@/app/components";
-import ProjectsDashboardWrapper from "@/app/components/Wrappers/ProjectsDashboardWrapper/ProjectsDashboardWrapper";
+import ProjectsDashboardWrapper from "@/app/components/Wrappers/dashboard/ProjectsWrapper/ProjectsWrapper";
 import { Suspense } from "react";
 
 const Page = () => {

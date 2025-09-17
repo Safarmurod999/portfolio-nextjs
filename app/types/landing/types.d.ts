@@ -1,10 +1,8 @@
 import { StaticImageData } from "next/image";
-
+import { Category } from "../store/categories";
 export {};
 
 declare global {
-
-
   interface ElementProps {
     id: number;
     time: string;
@@ -19,8 +17,8 @@ declare global {
 
   interface ServiceCardProps {
     id: number;
-    title: string;
-    description: string;
+    name: string;
+    category: Category;
   }
   interface ServiceWrapperProps {
     array: ServiceCardProps[];

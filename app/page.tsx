@@ -18,13 +18,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa6";
 
 import Circle from "./components/ui/Circle/Circle";
-import {
-  services,
-  skills,
-  education,
-  experience,
-  projects,
-} from "./const/data";
+import { skills, education, experience, projects } from "./const/data";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -33,6 +27,9 @@ import home from "./assets/images/Home/me-3.webp";
 import { Metadata } from "next";
 
 import { Toaster } from "sonner";
+import TechnologiesWrapper from "./components/Wrappers/client/TechnologiesWrapper/TechnologiesWrapper";
+import EducationWrapper from "./components/Wrappers/client/EducationWrapper/EducationWrapper";
+import ExperienceWrapper from "./components/Wrappers/client/ExperienceWrapper/ExperienceWrapper";
 export const metadata: Metadata = {
   title: "Safarmurod's Portfolio | Home",
   description:
@@ -142,7 +139,7 @@ const Page = async () => {
               <SecondaryBtn text={"All Services"} link={"/services"} />
             </div>
             <div className="services__details">
-              <ServiceWrapper array={services} />
+              <ServiceWrapper />
             </div>
           </div>
         </section>
@@ -177,25 +174,14 @@ const Page = async () => {
               <Link aria-label="about-page" href={"/about"}>
                 My Skills
               </Link>
-              <ul className="skills__list">
-                {skills.map((skill) => (
-                  <li className="skills__list--item" key={skill.id}>
-                    <div>
-                      <i
-                        className={`${skill.icon} hover:-rotate-[360deg] duration-300`}
-                      ></i>
-                    </div>
-                    <p>{skill.name}</p>
-                  </li>
-                ))}
-              </ul>
+              <TechnologiesWrapper />
             </div>
           </div>
         </section>
-        <section className="details">
+        <section id="details" className="details">
           <div className="container">
-            <DetailsWrapper array={education} title={"Education"} />
-            <DetailsWrapper array={experience} title={"Experience"} />
+            <EducationWrapper />
+            <ExperienceWrapper/>
           </div>
         </section>
         <section id="portfolio" className="projects">

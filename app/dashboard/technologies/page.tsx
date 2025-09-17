@@ -1,7 +1,7 @@
 "use client";
 
 import { Breadcrumb } from "@/app/components";
-import TechnologiesWrapper from "@/app/components/Wrappers/TechnologiesWrapper/TechnologiesWrapper";
+import TechnologiesWrapper from "@/app/components/Wrappers/dashboard/TechnologiesWrapper/TechnologiesWrapper";
 import { Suspense } from "react";
 
 const Page = () => {

@@ -1,7 +1,7 @@
 "use client";
 
 import { Breadcrumb } from "@/app/components";
-import ExperienceWrapper from "@/app/components/Wrappers/ExperienceWrapper/ExperienceWrapper";
+import ExperienceWrapper from "@/app/components/Wrappers/dashboard/ExperienceWrapper/ExperienceWrapper";
 import { Suspense } from "react";
 
 const Page = () => {

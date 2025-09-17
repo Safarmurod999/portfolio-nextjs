@@ -15,7 +15,7 @@ export class ServiceDetails {
   @Column({ type: "varchar", length: 100 })
   name!: string;
 
-  @ManyToOne(() => Services, (service) => service.id)
+  @ManyToOne(() => Services, (service) => service.id, { onDelete: "CASCADE" })
   @JoinColumn({ name: "service_id" })
   service!: Services;
 
