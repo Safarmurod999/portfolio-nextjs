@@ -174,8 +174,10 @@
     }
   }
   &__skills {
+    min-width: 675px;
     @media screen and (max-width: 1090px) {
       width: 100%;
+      min-width: none;
     }
     a {
       display: block;

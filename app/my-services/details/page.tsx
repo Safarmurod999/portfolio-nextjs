@@ -4,16 +4,12 @@ import Link from "next/link";
 import { GoArrowUpRight } from "react-icons/go";
 import { Title } from "../../components";
 import useConnect from "./connect";
+import { ServiceCardSkeleton } from "@/app/components/ui/Skeletons";
 
 const Page = () => {
   const [active, setActive] = useState(4);
   const { services, servicesLoading, serviceDetails, serviceDetailsLoading } =
     useConnect();
-  console.log(active);
-
-  if (serviceDetails) {
-    console.log(serviceDetails.filter((item) => item.service.id == active));
-  }
 
   return (
     <>
@@ -48,8 +44,7 @@ const Page = () => {
           <div className={`service__tab active`}>
             <Title>Website Development</Title>
             <ul className="service__tab--list">
-              {!serviceDetailsLoading &&
-                serviceDetails &&
+              {!serviceDetailsLoading && serviceDetails ? (
                 serviceDetails
                   .filter((item) => item.service.id == active)
                   .map((item, index) => {
@@ -70,7 +65,15 @@ const Page = () => {
                         </a>
                       </li>
                     );
-                  })}
+                  })
+              ) : (
+                <ul className="service__tab--list">
+                  <ServiceCardSkeleton />
+                  <ServiceCardSkeleton />
+                  <ServiceCardSkeleton />
+                  <ServiceCardSkeleton />
+                </ul>
+              )}
             </ul>
           </div>
           <div className={`service__tab ${active == 1 && "active"}`}>

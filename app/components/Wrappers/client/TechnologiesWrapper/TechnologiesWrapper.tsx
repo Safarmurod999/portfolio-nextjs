@@ -2,6 +2,7 @@
 
 import React from "react";
 import useConnect from "./connect";
+import { TechnologiesCardSkeleton } from "@/app/components/ui/Skeletons";
 const TechnologiesWrapper = () => {
   const { technologies, technologiesLoading } = useConnect();
   return (
@@ -20,7 +21,11 @@ const TechnologiesWrapper = () => {
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <ul className="skills__list">
+          {Array.from({ length: 10 }).map((_, index) => (
+            <TechnologiesCardSkeleton key={index} />
+          ))}
+        </ul>
       )}
     </>
   );

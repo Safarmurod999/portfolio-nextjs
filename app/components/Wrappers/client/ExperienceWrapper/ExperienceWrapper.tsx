@@ -1,5 +1,6 @@
 "use client";
 
+import DetailsCardSkeleton from "@/app/components/ui/Skeletons/DetailsCardSkeleton";
 import useConnect from "./connect";
 import ExperienceCard from "./ExperienceCard";
 
@@ -22,7 +23,11 @@ const ExperienceWrapper = () => {
           })}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <ul className="details-list">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <DetailsCardSkeleton key={index} />
+          ))}
+        </ul>
       )}
     </div>
   );

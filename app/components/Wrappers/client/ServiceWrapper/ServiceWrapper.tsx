@@ -3,6 +3,7 @@
 import React from "react";
 import ServiceCard from "./ServiceCard";
 import useConnect from "./connect";
+import ServiceCardSkeleton from "@/app/components/ui/Skeletons/ServiceCardSkeleton";
 const ServiceWrapper = () => {
   const { services, servicesLoading } = useConnect();
   return (
@@ -19,7 +20,12 @@ const ServiceWrapper = () => {
           ))}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <ul className="service-wrapper">
+          <ServiceCardSkeleton key={1} />
+          <ServiceCardSkeleton key={2} />
+          <ServiceCardSkeleton key={3} />
+          <ServiceCardSkeleton key={4} />
+        </ul>
       )}
     </>
   );

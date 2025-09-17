@@ -2,11 +2,11 @@
 
 import useConnect from "./connect";
 import EducationCard from "./EducationCard";
+import DetailsCardSkeleton from "@/app/components/ui/Skeletons/DetailsCardSkeleton";
 
 const EducationWrapper = () => {
   const { education, educationLoading } = useConnect();
-  console.log(education);
-  
+
   return (
     <div className="details-wrapper">
       <h2 className="details-title">Education</h2>
@@ -24,7 +24,11 @@ const EducationWrapper = () => {
           })}
         </ul>
       ) : (
-        <p>Loading...</p>
+        <ul className="details-list">
+          {Array.from({ length: 3 }).map((_, index) => (
+            <DetailsCardSkeleton key={index} />
+          ))}
+        </ul>
       )}
     </div>
   );
