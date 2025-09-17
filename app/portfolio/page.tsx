@@ -1,6 +1,6 @@
 import React, { Suspense } from "react";
 import { Metadata } from "next";
-import { BASIC_URL, projects } from "../const/data";
+import { projects } from "../const/data";
 import "../styles/app.scss";
 import { Footer, Header, ProjectsWrapper, Spinner, Title } from "../components";
 import Link from "next/link";
@@ -12,7 +12,6 @@ export const metadata: Metadata = {
 };
 
 const Portfolio = async () => {
-  const data = await fetchData();
 
   return (
     <>
@@ -40,14 +39,3 @@ const Portfolio = async () => {
 };
 
 export default Portfolio;
-
-const fetchData = async () => {
-  try {
-    const response = await fetch(`${BASIC_URL}/users`);
-
-    const data = await response.json();
-    return data;
-  } catch (error: unknown) {
-    console.log(error);
-  }
-};
