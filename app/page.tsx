@@ -119,7 +119,7 @@ const Page = async () => {
               <div className="circular">
                 <Circle
                   text={"Download - CV Download - CV "}
-                  link={"app/assets/files/safarmurod-cv-en.pdf"}
+                  link={"/files/safarmurod-cv-en.pdf"}
                   id={"third"}
                 />
               </div>
