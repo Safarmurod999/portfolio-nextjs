@@ -1,6 +1,5 @@
 import React from "react";
 import {
-  DetailsWrapper,
   Footer,
   Header,
   PrimaryBtn,
@@ -18,7 +17,7 @@ import { FaInstagram } from "react-icons/fa";
 import { FaLinkedinIn } from "react-icons/fa6";
 
 import Circle from "./components/ui/Circle/Circle";
-import { skills, education, experience, projects } from "./const/data";
+import { projects } from "./const/data";
 
 import Image from "next/image";
 import Link from "next/link";
@@ -136,7 +135,7 @@ const Page = async () => {
                 Donec imperdiet risus at tortor consequat maximus et eget magna.
                 Cras ornare sagittis augue, id sollicitudin justo tristique ut.
               </Typography>
-              <SecondaryBtn text={"All Services"} link={"/services"} />
+              <SecondaryBtn text={"All Services"} link={"/my-services"} />
             </div>
             <div className="services__details">
               <ServiceWrapper />
@@ -171,7 +170,7 @@ const Page = async () => {
               </Typography>
             </div>
             <div className="about__skills">
-              <Link aria-label="about-page" href={"/about"}>
+              <Link aria-label="about-page" href={"/#about"}>
                 My Skills
               </Link>
               <TechnologiesWrapper />
@@ -181,7 +180,7 @@ const Page = async () => {
         <section id="details" className="details">
           <div className="container">
             <EducationWrapper />
-            <ExperienceWrapper/>
+            <ExperienceWrapper />
           </div>
         </section>
         <section id="portfolio" className="projects">
